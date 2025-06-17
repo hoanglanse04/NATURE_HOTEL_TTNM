@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý bài viết - Natural Hotel</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f8f9fa;
+      }
+      .sidebar {
+        width: 280px;
+        min-height: 100vh;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 100;
+      }
+      .main-wrapper {
+        margin-left: 280px;
+        width: calc(100% - 280px);
+      }
+      .sidebar .nav-link {
+        color: #555;
+        font-weight: 500;
+        padding: 12px 15px;
+        display: flex;
+        align-items: center;
+        border-radius: 8px;
+        margin-bottom: 5px;
+      }
+      .sidebar .nav-link i {
+        width: 20px;
+        margin-right: 15px;
+        text-align: center;
+      }
+      .sidebar .nav-link.active,
+      .sidebar .nav-link:hover {
+        background-color: #eef2ff;
+        color: #435ebe;
+      }
+      .sidebar-header {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        color: #25396f;
+      }
+      .sidebar-footer {
+        position: absolute;
+        bottom: 20px;
+        width: calc(280px - 40px);
+      }
+      .user-profile {
+        display: flex;
+        align-items: center;
+      }
+      .user-profile img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+      .main-content {
+        flex-grow: 1;
+        padding: 30px;
+      }
+      .main-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+      .list-group-item {
+        padding: 20px !important;
+      }
+      .list-item-img {
+        width: 100px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 8px;
+        flex-shrink: 0;
+      }
+      .modal-content {
+        border-radius: 12px;
+        border: none;
+        padding: 10px;
+      }
+      .modal-header,
+      .modal-footer {
+        border: none;
+      }
+      .btn-purple {
+        background-color: #5856d6;
+        border-color: #5856d6;
+        color: white;
+        padding: 10px 20px;
+      }
+      .btn-purple:hover {
+        background-color: #4341a3;
+        border-color: #4341a3;
+        color: white;
+      }
+
+      /* CSS MỚI CHO TRANG NÀY */
+      .item-info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        justify-content: start;
+        gap: 4px 40px;
+        margin-left: 20px;
+      }
+      .item-info-grid .grid-item-name {
+        grid-column: 1 / -1;
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-bottom: 4px;
+      }
+      .item-info-grid p,
+      .item-info-grid a {
+        margin-bottom: 0;
+        font-size: 0.9rem;
+        white-space: nowrap;
+      }
+      .item-info-grid .grid-item-details-link {
+        color: #0d6efd;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .item-info-grid .grid-item-muted {
+        color: #6c757d;
+      }
+
+      .badge-status {
+        padding: 0.4em 0.8em;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+      .badge-published {
+        background-color: #e0cffc;
+        color: #5856d6;
+      }
+      .badge-draft {
+        background-color: #d1e7dd;
+        color: #0f5132;
+      }
+
+      .image-uploader {
+        border: 2px dashed #ced4da;
+        border-radius: 8px;
+        padding: 30px;
+        text-align: center;
+        background-color: #f8f9fa;
+        cursor: pointer;
+      }
+      .image-uploader i {
+        font-size: 40px;
+        color: #adb5bd;
+      }
+      .image-uploader p {
+        margin-top: 15px;
+        font-weight: 500;
+      }
+      .image-uploader a {
+        color: #0d6efd;
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      .status-toggle .btn {
+        border-radius: 20px !important;
+      }
+      .status-toggle {
+        display: flex;
+        gap: 10px; /* Tạo khoảng cách 10px giữa các nút */
+      }
+
+      /* Style chung cho từng nút */
+      .status-toggle .btn {
+        background-color: #f1f3f5; /* Màu nền xám nhạt khi không được chọn */
+        color: #495057;
+        border: none;
+        border-radius: 8px !important;
+        padding: 8px 20px;
+        font-weight: 500;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+      }
+      .status-toggle .btn:hover {
+        background-color: #e9ecef;
+      }
+
+      /* Style cho nút "Xuất bản" KHI ĐƯỢC CHỌN */
+      .status-toggle .btn-check:checked + .btn-status-published {
+        background-color: #e6dffc; /* Màu nền tím nhạt */
+        color: #5856d6; /* Màu chữ tím đậm */
+        box-shadow: 0 2px 5px rgba(88, 86, 214, 0.2);
+      }
+
+      /* Style cho nút "Bản nháp" KHI ĐƯỢC CHỌN */
+      .status-toggle .btn-check:checked + .btn-status-draft {
+        background-color: #d1fae5; /* Màu nền xanh lá nhạt */
+        color: #047857; /* Màu chữ xanh đậm */
+        box-shadow: 0 2px 5px rgba(4, 120, 87, 0.2);
+      }
+
+      /* CSS cho trình soạn thảo Quill */
+      .ql-toolbar.ql-snow {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+      .ql-container.ql-snow {
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        min-height: 150px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="d-flex">
+      <nav class="sidebar">
+        <h4 class="sidebar-header">Natural Hotel</h4>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+              ><i class="fas fa-chart-line"></i> Thống kê</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+              ><i class="fas fa-bed"></i> Quản lý phòng</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+              ><i class="fas fa-tags"></i> Quản lý loại</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+              ><i class="fas fa-users"></i> Quản lý tài khoản</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+              ><i class="fas fa-concierge-bell"></i> Quản lý dịch vụ</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+              ><i class="fas fa-file-alt"></i> Quản lý tài nguyên</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+              ><i class="fas fa-couch"></i> Quản lý tiện nghi</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#"
+              ><i class="fas fa-newspaper"></i> Quản lý bài viết</a
+            >
+          </li>
+        </ul>
+        <hr />
+        <p class="text-muted small">Hỗ trợ</p>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-cog"></i> Cài đặt</a>
+          </li>
+        </ul>
+        <div class="sidebar-footer">
+          <div class="user-profile">
+            <img src="https://i.pravatar.cc/40?u=admin" alt="Admin avatar" />
+            <div>
+              <h6 class="mb-0">Admin</h6>
+              <small class="text-muted">Project Manager</small>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="main-wrapper">
+        <div class="main-content">
+          <header class="main-header">
+            <h3>Quản lý bài viết</h3>
+            <div>
+              <button class="btn btn-custom-outline me-2">
+                <i class="fas fa-microphone"></i>
+              </button>
+              <button class="btn btn-custom-outline">
+                <i class="fas fa-download me-2"></i> Tải về
+              </button>
+            </div>
+          </header>
+          <div class="card">
+            <div class="card-header">
+              <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Danh sách bài viết</h5>
+                <div class="d-flex align-items-center">
+                  <div class="input-group me-2" style="width: 250px">
+                    <span class="input-group-text bg-white"
+                      ><i class="fas fa-search"></i
+                    ></span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Tìm kiếm"
+                    />
+                  </div>
+                  <select class="form-select me-2" style="width: 150px">
+                    <option selected>Sắp xếp: Mới nhất</option>
+                    <option value="1">Cũ nhất</option>
+                  </select>
+                  <button
+                    class="btn btn-primary text-nowrap"
+                    data-bs-toggle="modal"
+                    data-bs-target="#addArticleModal"
+                  >
+                    <i class="fas fa-plus me-2"></i>Thêm Mới
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <div class="d-flex align-items-center px-4 pt-3">
+                <label class="form-label me-2 text-nowrap">Hiển thị</label>
+                <select class="form-select" style="width: 80px">
+                  <option selected>10</option>
+                  <option value="25">25</option>
+                </select>
+                <span class="ms-2 text-muted">dữ liệu</span>
+              </div>
+              <ul
+                class="list-group list-group-flush mt-3"
+                id="article-list"
+              ></ul>
+            </div>
+            <div class="card-footer bg-white">
+              <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-end mb-0">
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#"><</a>
+                  </li>
+                  <li class="page-item active">
+                    <a class="page-link" href="#">1</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">40</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">></a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="addArticleModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              <i class="fas fa-plus-circle me-2"></i>Thêm bài viết mới
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body px-4">
+            <form id="add-article-form">
+              <div class="image-uploader mb-3">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Kéo và thả một hình ảnh, hoặc <a href="#">Duyệt</a></p>
+                <small class="text-muted"
+                  >Khuyến nghị chiều rộng tối thiểu 800px. Tối đa 10MB mỗi
+                  tệp.</small
+                >
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Tiêu đề bài viết*</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="title"
+                  required
+                  placeholder="Tiêu đề bài viết"
+                />
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Chủ đề*</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="topic"
+                    placeholder="vi dụ:#noitieng"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Tiêu đề meta*</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="metaTitle"
+                    placeholder="Tiêu đề meta ?"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Nội dung*</label>
+                <div id="add-editor-container"></div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Trạng thái*</label>
+                <div class="status-toggle">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="status"
+                    id="add-status-published"
+                    value="Xuất bản"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-status-published"
+                    for="add-status-published"
+                    >Xuất bản</label
+                  >
+
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="status"
+                    id="add-status-draft"
+                    value="Bản nháp"
+                    autocomplete="off"
+                    checked
+                  />
+                  <label class="btn btn-status-draft" for="add-status-draft"
+                    >Bản nháp</label
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-light border"
+              data-bs-dismiss="modal"
+            >
+              Thoát
+            </button>
+            <button
+              type="submit"
+              form="add-article-form"
+              class="btn btn-purple"
+            >
+              Thêm
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="editArticleModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              <i class="fas fa-edit me-2"></i>Chỉnh sửa bài viết
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body px-4">
+            <form id="edit-article-form">
+              <input type="hidden" name="id" />
+              <div class="image-uploader mb-3">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Kéo và thả một hình ảnh, hoặc <a href="#">Duyệt</a></p>
+                <small class="text-muted"
+                  >Khuyến nghị chiều rộng tối thiểu 800px. Tối đa 10MB mỗi
+                  tệp.</small
+                >
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Tiêu đề bài viết*</label>
+                <input type="text" class="form-control" name="title" required />
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Chủ đề*</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="topic"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Tiêu đề meta*</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="metaTitle"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Nội dung*</label>
+                <div id="edit-editor-container"></div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-light border"
+              data-bs-dismiss="modal"
+            >
+              Thoát
+            </button>
+            <button
+              type="submit"
+              form="edit-article-form"
+              class="btn btn-purple"
+            >
+              Lưu
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="changeStatusModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+          <div class="modal-body text-center p-4">
+            <i class="fas fa-exclamation-circle fa-3x mb-3 text-warning"></i>
+            <h5 class="mb-3">Cảnh báo</h5>
+            <p class="text-muted">
+              Bạn có chắc chắn muốn đổi trạng thái của bài viết này không?
+            </p>
+            <div class="d-flex justify-content-center mt-4">
+              <button
+                type="button"
+                class="btn btn-light me-2"
+                data-bs-dismiss="modal"
+              >
+                Thoát
+              </button>
+              <button
+                type="button"
+                class="btn btn-purple"
+                id="confirm-change-status-btn"
+              >
+                Xác nhận
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+          <div class="modal-body text-center p-4">
+            <i class="fas fa-trash-alt fa-3x mb-3 text-danger"></i>
+            <h5 class="mb-3">Xoá bài viết</h5>
+            <p class="text-muted">
+              Bạn có chắc chắn muốn bài viết này không? Hành động này không thể
+              hoàn tác.
+            </p>
+            <div class="d-flex justify-content-center mt-4">
+              <button
+                type="button"
+                class="btn btn-light me-2"
+                data-bs-dismiss="modal"
+              >
+                Thoát</button
+              ><button
+                type="button"
+                class="btn btn-danger"
+                id="confirm-delete-btn"
+              >
+                Xác nhận
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="successModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content text-center">
+          <div class="modal-body p-4">
+            <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+            <h5 id="success-message">Thao tác thành công!</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // ===== DỮ LIỆU MÔ PHỎNG =====
+        let articles = [
+          {
+            id: 1,
+            title: "Bài viết 1",
+            date: "12/6/2021",
+            author: "John Doe",
+            status: "Xuất bản",
+            topic: "#noitieng",
+            metaTitle: "Bài viết hay",
+            content: "<p>Nội dung <strong>bài viết 1</strong>.</p>",
+            img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=100",
+          },
+          {
+            id: 2,
+            title: "Bài viết 2",
+            date: "12/6/2021",
+            author: "Harry Potter",
+            status: "Bản nháp",
+            topic: "#khuyenmai",
+            metaTitle: "Bài viết hot",
+            content: "<p>Nội dung <i>bài viết 2</i>.</p>",
+            img: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=100",
+          },
+          {
+            id: 3,
+            title: "Bài viết 3",
+            date: "12/6/2021",
+            author: "John Doe",
+            status: "Xuất bản",
+            topic: "#noitieng",
+            metaTitle: "Bài viết hay",
+            content: "<p>Nội dung bài viết 3.</p>",
+            img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=100",
+          },
+        ];
+
+        // ===== KHỞI TẠO QUILL EDITOR =====
+        const quillOptions = {
+          theme: "snow",
+          modules: {
+            toolbar: [
+              ["bold", "italic", "underline", "link"],
+              ["blockquote", "code-block"],
+              [{ list: "ordered" }, { list: "bullet" }],
+            ],
+          },
+        };
+        const deleteModal = new bootstrap.Modal(
+          document.getElementById("deleteModal")
+        );
+        const addEditor = new Quill("#add-editor-container", quillOptions);
+        const editEditor = new Quill("#edit-editor-container", quillOptions);
+
+        // ===== LẤY ELEMENT & KHỞI TẠO MODAL =====
+        const confirmDeleteBtn = document.getElementById("confirm-delete-btn");
+        const articleListEl = document.getElementById("article-list");
+        const addForm = document.getElementById("add-article-form");
+        const editForm = document.getElementById("edit-article-form");
+        const confirmChangeStatusBtn = document.getElementById(
+          "confirm-change-status-btn"
+        );
+        const successMessageEl = document.getElementById("success-message");
+        let amenityIdToDelete = null;
+
+        const addModal = new bootstrap.Modal(
+          document.getElementById("addArticleModal")
+        );
+        const editModal = new bootstrap.Modal(
+          document.getElementById("editArticleModal")
+        );
+        const changeStatusModal = new bootstrap.Modal(
+          document.getElementById("changeStatusModal")
+        );
+        const successModal = new bootstrap.Modal(
+          document.getElementById("successModal")
+        );
+
+        let articleIdToProcess = null;
+
+        // ===== CÁC HÀM XỬ LÝ =====
+        function renderArticles() {
+          articleListEl.innerHTML = "";
+          articles.forEach((item) => {
+            const statusClass =
+              item.status === "Xuất bản" ? "badge-published" : "badge-draft";
+            const li = document.createElement("li");
+            li.className = "list-group-item";
+            li.innerHTML = `
+                <div class="d-flex align-items-center w-100">
+                    <img src="${item.img}" class="list-item-img" alt="${item.title}">
+                    <div class="item-info-grid flex-grow-1">
+                        <h5 class="grid-item-name">${item.title}</h5>
+                        <p class="grid-item-muted">Ngày tạo: ${item.date}</p>
+                        <p class="grid-item-muted">Tạo bởi: ${item.author}</p>
+                        <a href="#" class="grid-item-details-link">Xem chi tiết</a>
+                        <p class="grid-item-muted">Trạng thái: <span class="badge-status ${statusClass}">${item.status}</span></p>
+                    </div>
+                    <div class="ms-auto ps-3 d-flex gap-2">
+                        <button class="btn btn-success btn-sm btn-change-status" data-id="${item.id}">Đổi trạng thái</button>
+                        <button class="btn btn-primary btn-sm btn-edit" data-id="${item.id}">Chỉnh sửa</button>
+                        <button class="btn btn-danger btn-sm btn-delete" data-id="${item.id}">Xoá</button>
+                    </div>
+                </div>
+            `;
+            articleListEl.appendChild(li);
+          });
+        }
+
+        function showSuccessNotification(message) {
+          successMessageEl.textContent = message;
+          successModal.show();
+          setTimeout(() => successModal.hide(), 2000);
+        }
+
+        // ===== LẮNG NGHE SỰ KIỆN =====
+        // Thêm bài viết
+        addForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const formData = new FormData(addForm);
+          const newArticle = {
+            id: Date.now(),
+            title: formData.get("title"),
+            topic: formData.get("topic"),
+            metaTitle: formData.get("metaTitle"),
+            status: formData.get("status"),
+            content: addEditor.root.innerHTML,
+            date: new Date().toLocaleDateString("vi-VN"),
+            author: "Admin",
+            img: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=100",
+          };
+          articles.unshift(newArticle); // Thêm vào đầu mảng
+          renderArticles();
+          addModal.hide();
+          addForm.reset();
+          addEditor.setText("");
+          showSuccessNotification("Thêm bài viết thành công.");
+        });
+
+        // Sửa bài viết
+        editForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const formData = new FormData(editForm);
+          const id = parseInt(formData.get("id"));
+          const article = articles.find((a) => a.id === id);
+          if (article) {
+            article.title = formData.get("title");
+            article.topic = formData.get("topic");
+            article.metaTitle = formData.get("metaTitle");
+            article.content = editEditor.root.innerHTML;
+          }
+          renderArticles();
+          editModal.hide();
+          showSuccessNotification("Cập nhật bài viết thành công.");
+        });
+
+        // Các hành động trên danh sách (Sửa, Xoá, Đổi trạng thái)
+        articleListEl.addEventListener("click", function (e) {
+          const target = e.target.closest("button");
+          if (!target) return;
+
+          const id = parseInt(target.dataset.id);
+
+          if (target.classList.contains("btn-edit")) {
+            const article = articles.find((a) => a.id === id);
+            if (article) {
+              editForm.querySelector('[name="id"]').value = article.id;
+              editForm.querySelector('[name="title"]').value = article.title;
+              editForm.querySelector('[name="topic"]').value = article.topic;
+              editForm.querySelector('[name="metaTitle"]').value =
+                article.metaTitle;
+              editEditor.root.innerHTML = article.content;
+              editModal.show();
+            }
+          } else if (target.classList.contains("btn-delete")) {
+            // Logic xoá (có thể thêm modal xác nhận xoá tương tự)
+            amenityIdToDelete = parseInt(e.target.dataset.id);
+            deleteModal.show();
+          } else if (target.classList.contains("btn-change-status")) {
+            articleIdToProcess = id;
+            changeStatusModal.show();
+          }
+        });
+
+        // Xác nhận đổi trạng thái
+        confirmChangeStatusBtn.addEventListener("click", function () {
+          const article = articles.find((a) => a.id === articleIdToProcess);
+          if (article) {
+            article.status =
+              article.status === "Xuất bản" ? "Bản nháp" : "Xuất bản";
+            renderArticles();
+          }
+          changeStatusModal.hide();
+          showSuccessNotification("Đổi trạng thái thành công.");
+          articleIdToProcess = null;
+        });
+        confirmDeleteBtn.addEventListener("click", function () {
+          if (amenityIdToDelete !== null) {
+            articles = articles.filter((item) => item.id !== amenityIdToDelete);
+            renderArticles();
+            deleteModal.hide();
+            showSuccessNotification("Bài viết này đã được xoá thành công.");
+            amenityIdToDelete = null;
+          }
+        });
+
+        // KHỞI CHẠY LẦN ĐẦU
+        renderArticles();
+      });
+    </script>
+  </body>
+</html>
