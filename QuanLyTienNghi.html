@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý tiện nghi - Natural Hotel</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f8f9fa;
+      }
+      .sidebar {
+        width: 280px;
+        min-height: 100vh;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 100;
+      }
+      .main-wrapper {
+        margin-left: 280px;
+        width: calc(100% - 280px);
+      }
+      .sidebar .nav-link {
+        color: #555;
+        font-weight: 500;
+        padding: 12px 15px;
+        display: flex;
+        align-items: center;
+        border-radius: 8px;
+        margin-bottom: 5px;
+      }
+      .sidebar .nav-link i {
+        width: 20px;
+        margin-right: 15px;
+        text-align: center;
+      }
+      .sidebar .nav-link.active,
+      .sidebar .nav-link:hover {
+        background-color: #eef2ff;
+        color: #435ebe;
+      }
+      .sidebar-header {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        color: #25396f;
+      }
+      .sidebar-footer {
+        position: absolute;
+        bottom: 20px;
+        width: calc(280px - 40px);
+      }
+      .user-profile {
+        display: flex;
+        align-items: center;
+      }
+      .user-profile img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+      .main-content {
+        flex-grow: 1;
+        padding: 30px;
+      }
+      .main-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .btn-custom-outline {
+        border: 1px solid #ced4da;
+        color: #495057;
+      }
+      .card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+      .card-header {
+        background-color: #fff;
+        border-bottom: 1px solid #eee;
+        padding: 20px;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+      }
+      .list-group-item {
+        padding: 20px !important;
+      }
+      .list-item-img {
+        width: 100px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 8px;
+        flex-shrink: 0; /* Không cho ảnh bị co lại */
+      }
+      .modal-content {
+        border-radius: 12px;
+        border: none;
+        padding: 10px;
+      }
+      .modal-header,
+      .modal-footer {
+        border: none;
+      }
+      .modal-header {
+        padding-bottom: 0;
+      }
+      .modal-footer {
+        padding-top: 0;
+      }
+      .btn-purple {
+        background-color: #5856d6;
+        border-color: #5856d6;
+        color: white;
+        padding: 10px 20px;
+      }
+      .btn-purple:hover {
+        background-color: #4341a3;
+        border-color: #4341a3;
+        color: white;
+      }
+      #successModal .modal-body {
+        text-align: center;
+      }
+      #successModal .fa-check-circle {
+        font-size: 50px;
+        color: #28a745;
+        margin-bottom: 15px;
+      }
+      #deleteModal .fa-trash-alt {
+        font-size: 30px;
+        color: #dc3545;
+      }
+      .page-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.7);
+        z-index: 1040;
+        display: none;
+      }
+      .custom-file-input .input-group-text {
+        background-color: #e9ecef;
+        border-right: 0;
+        cursor: pointer;
+      }
+      .custom-file-input .form-control[readonly] {
+        background-color: #fff;
+      }
+
+      /* ===== CSS MỚI CHO BỐ CỤC LƯỚI (GRID) ===== */
+      .item-info-grid {
+        display: grid;
+        grid-template-columns: repeat(
+          2,
+          auto
+        ); /* Tạo 2 cột, chiều rộng tự động */
+        justify-content: start; /* Căn các cột về bên trái */
+        gap: 4px 40px; /* 4px khoảng cách hàng, 40px khoảng cách cột */
+        margin-left: 20px;
+      }
+      .item-info-grid .grid-item-name {
+        grid-column: 1 / -1; /* Tên tiện nghi chiếm trọn 2 cột */
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-bottom: 4px;
+      }
+      .item-info-grid p,
+      .item-info-grid a {
+        margin-bottom: 0;
+        font-size: 0.9rem;
+        white-space: nowrap; /* Không xuống dòng */
+      }
+      .item-info-grid .grid-item-details-link {
+        color: #0d6efd;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .item-info-grid .grid-item-muted {
+        color: #6c757d;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-overlay" id="page-overlay"></div>
+    <div class="d-flex">
+      <nav class="sidebar">
+        <h4 class="sidebar-header">Natural Hotel</h4>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+              ><i class="fas fa-chart-line"></i> Thống kê</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+              ><i class="fas fa-bed"></i> Quản lý phòng</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+              ><i class="fas fa-tags"></i> Quản lý loại</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+              ><i class="fas fa-users"></i> Quản lý tài khoản</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+              ><i class="fas fa-concierge-bell"></i> Quản lý dịch vụ</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+              ><i class="fas fa-file-alt"></i> Quản lý tài nguyên</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#"
+              ><i class="fas fa-couch"></i> Quản lý tiện nghi</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"
+              ><i class="fas fa-newspaper"></i> Quản lý bài viết</a
+            >
+          </li>
+        </ul>
+        <hr />
+        <p class="text-muted small">Hỗ trợ</p>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-cog"></i> Cài đặt</a>
+          </li>
+        </ul>
+        <div class="sidebar-footer">
+          <div class="user-profile">
+            <img src="https://i.pravatar.cc/40?u=admin" alt="Admin avatar" />
+            <div>
+              <h6 class="mb-0">Admin</h6>
+              <small class="text-muted">Project Manager</small>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="main-wrapper">
+        <div class="main-content">
+          <header class="main-header">
+            <h3>Quản lý tiện nghi</h3>
+            <div>
+              <button class="btn btn-custom-outline">
+                <i class="fas fa-download me-2"></i> Tải về
+              </button>
+            </div>
+          </header>
+          <div class="card">
+            <div class="card-header">
+              <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Danh sách tiện nghi</h5>
+                <div class="d-flex align-items-center">
+                  <div class="input-group me-2" style="width: 250px">
+                    <span class="input-group-text bg-white"
+                      ><i class="fas fa-search"></i
+                    ></span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Tìm kiếm"
+                    />
+                  </div>
+                  <select class="form-select me-2" style="width: 150px">
+                    <option selected>Sắp xếp: Mới nhất</option>
+                    <option value="1">Cũ nhất</option>
+                    <option value="2">Tên A-Z</option>
+                  </select>
+                  <button
+                    class="btn btn-primary text-nowrap"
+                    data-bs-toggle="modal"
+                    data-bs-target="#addAmenityModal"
+                  >
+                    <i class="fas fa-plus me-2"></i>Thêm Mới
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <div class="d-flex align-items-center px-4 pt-3">
+                <label for="show-entries" class="form-label me-2 text-nowrap"
+                  >Hiển thị</label
+                >
+                <select
+                  id="show-entries"
+                  class="form-select"
+                  style="width: 80px"
+                >
+                  <option selected>10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                </select>
+                <span class="ms-2 text-muted">dữ liệu</span>
+              </div>
+              <ul
+                class="list-group list-group-flush mt-3"
+                id="amenity-list"
+              ></ul>
+            </div>
+            <div class="card-footer bg-white">
+              <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-end mb-0">
+                  <li class="page-item disabled">
+                    <a
+                      class="page-link"
+                      href="#"
+                      tabindex="-1"
+                      aria-disabled="true"
+                      ><</a
+                    >
+                  </li>
+                  <li class="page-item active">
+                    <a class="page-link" href="#">1</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">40</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">></a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="addAmenityModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              <i class="fas fa-tag me-2"></i> Thêm tiện nghi
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body px-4">
+            <p class="text-muted small">
+              Tất cả thông tin tiện nghi cần thiết có thể được thêm vào đây.
+            </p>
+            <form id="add-amenity-form" class="mt-4">
+              <div class="mb-3">
+                <label class="form-label">Tên tiện nghi*</label
+                ><input
+                  type="text"
+                  class="form-control"
+                  name="name"
+                  placeholder="Tiện Nghi 10"
+                  required
+                />
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Loại tiện nghi*</label
+                  ><input
+                    type="text"
+                    class="form-control"
+                    name="type"
+                    placeholder="Tiện nghi phòng khách"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Ảnh tiện nghi*</label>
+                  <div class="input-group custom-file-input">
+                    <label for="add-file-input" class="input-group-text"
+                      ><i class="fas fa-file-image me-2"></i>Tải lên</label
+                    ><input
+                      type="file"
+                      id="add-file-input"
+                      class="d-none"
+                    /><input
+                      type="text"
+                      class="form-control"
+                      name="imageFileName"
+                      placeholder="hinhanhtiennghi.png"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Hạn tiện nghi*</label
+                ><select class="form-select" name="duration" required>
+                  <option>2 - 5 năm</option>
+                  <option>1 năm</option>
+                  <option>> 5 năm</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Mô tả tiện nghi*</label
+                ><textarea
+                  class="form-control"
+                  name="description"
+                  rows="3"
+                  placeholder="Tiện nghi hữu ích thân thiện"
+                  required
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-light border"
+              data-bs-dismiss="modal"
+            >
+              Thoát</button
+            ><button
+              type="submit"
+              form="add-amenity-form"
+              class="btn btn-purple"
+            >
+              Thêm
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="editAmenityModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              <i class="fas fa-edit me-2"></i> Chỉnh sửa tiện nghi
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body px-4">
+            <p class="text-muted small">
+              Tất cả thông tin của tiện nghi cần thiết có thể được chỉnh sửa tại
+              đây
+            </p>
+            <form id="edit-amenity-form" class="mt-4">
+              <input type="hidden" name="id" />
+              <div class="mb-3">
+                <label class="form-label">Tên tiện nghi*</label
+                ><input type="text" class="form-control" name="name" required />
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Loại tiện nghi*</label
+                  ><input
+                    type="text"
+                    class="form-control"
+                    name="type"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Ảnh tiện nghi*</label>
+                  <div class="input-group custom-file-input">
+                    <label for="edit-file-input" class="input-group-text"
+                      ><i class="fas fa-file-image me-2"></i>Tải lên</label
+                    ><input
+                      type="file"
+                      id="edit-file-input"
+                      class="d-none"
+                    /><input
+                      type="text"
+                      class="form-control"
+                      name="imageFileName"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Hạn tiện nghi*</label
+                ><select class="form-select" name="duration" required>
+                  <option>2 - 5 năm</option>
+                  <option>1 năm</option>
+                  <option>> 5 năm</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Mô tả tiện nghi*</label
+                ><textarea
+                  class="form-control"
+                  name="description"
+                  rows="3"
+                  required
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-light border"
+              data-bs-dismiss="modal"
+            >
+              Thoát</button
+            ><button
+              type="submit"
+              form="edit-amenity-form"
+              class="btn btn-purple"
+            >
+              Lưu
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+          <div class="modal-body text-center p-4">
+            <i class="fas fa-trash-alt fa-3x mb-3 text-danger"></i>
+            <h5 class="mb-3">Xoá tiện nghi</h5>
+            <p class="text-muted">
+              Bạn có chắc chắn muốn tiện nghi này không? Hành động này không thể
+              hoàn tác.
+            </p>
+            <div class="d-flex justify-content-center mt-4">
+              <button
+                type="button"
+                class="btn btn-light me-2"
+                data-bs-dismiss="modal"
+              >
+                Thoát</button
+              ><button
+                type="button"
+                class="btn btn-danger"
+                id="confirm-delete-btn"
+              >
+                Xác nhận
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="successModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+          <div class="modal-body p-4">
+            <i class="fas fa-check-circle"></i>
+            <h5 class="modal-title">Thành công</h5>
+            <p class="text-muted" id="success-message"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let amenities = [
+          {
+            id: 1,
+            name: "Đồ dùng phòng bếp",
+            description: "Đồ dùng phòng bếp.",
+            type: "Tiện nghi phòng bếp",
+            duration: "2 - 5 năm",
+            imageFileName: "sofa.png",
+            date: "12/6/2021",
+            author: "John Doe",
+            img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=100",
+          },
+          {
+            id: 2,
+            name: "Bàn làm việc",
+            description: "Bàn làm việc rộng rãi, thoải mái.",
+            type: "Tiện nghi phòng ngủ",
+            duration: "2 - 5 năm",
+            imageFileName: "banlamviec.jpg",
+            date: "12/6/2021",
+            author: "Harry Potter",
+            img: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=100",
+          },
+          {
+            id: 3,
+            name: "Sofa phòng ngủ",
+            description: "Sofa phòng ngủ",
+            type: "Tiện nghi phòng ngủ",
+            duration: "1 năm",
+            imageFileName: "sanphamtam.webp",
+            date: "12/6/2021",
+            author: "John Doe",
+            img: "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=100",
+          },
+        ];
+
+        const amenityList = document.getElementById("amenity-list");
+        const addForm = document.getElementById("add-amenity-form");
+        const editForm = document.getElementById("edit-amenity-form");
+        const confirmDeleteBtn = document.getElementById("confirm-delete-btn");
+        const successMessageEl = document.getElementById("success-message");
+        const pageOverlay = document.getElementById("page-overlay");
+
+        const addModal = new bootstrap.Modal(
+          document.getElementById("addAmenityModal")
+        );
+        const editModal = new bootstrap.Modal(
+          document.getElementById("editAmenityModal")
+        );
+        const deleteModal = new bootstrap.Modal(
+          document.getElementById("deleteModal")
+        );
+        const successModal = new bootstrap.Modal(
+          document.getElementById("successModal")
+        );
+
+        let amenityIdToDelete = null;
+
+        // ===== CẬP NHẬT: HÀM RENDER VỚI BỐ CỤC LƯỚI (GRID) =====
+        function renderAmenities() {
+          amenityList.innerHTML = "";
+          amenities.forEach((item) => {
+            const li = document.createElement("li");
+            li.className = "list-group-item";
+
+            // THAY ĐỔI DUY NHẤT Ở ĐÂY: từ 'align-items-start' thành 'align-items-center'
+            li.innerHTML = `
+                <div class="d-flex align-items-center w-100"> 
+                    <img src="${item.img}" class="list-item-img" alt="${item.name}">
+                    
+                    <div class="item-info-grid flex-grow-1">
+                        <h5 class="grid-item-name">${item.name}</h5>
+                        <p class="grid-item-muted">Ngày tạo: ${item.date}</p>
+                        <p class="grid-item-muted">Hạn: ${item.duration}</p>
+                        <a href="#" class="grid-item-details-link">Xem chi tiết</a>
+                        <p class="grid-item-muted">Tạo bởi: ${item.author}</p>
+                    </div>
+
+                    <div class="ms-auto ps-3">
+                        <button class="btn btn-primary btn-sm btn-edit" data-id="${item.id}">Chỉnh sửa</button>
+                        <button class="btn btn-danger btn-sm btn-delete" data-id="${item.id}">Xoá</button>
+                    </div>
+                </div>
+            `;
+            amenityList.appendChild(li);
+          });
+        }
+
+        // Các hàm và sự kiện khác giữ nguyên...
+        function showSuccessNotification(message) {
+          successMessageEl.textContent = message;
+          pageOverlay.style.display = "block";
+          successModal.show();
+          setTimeout(() => {
+            successModal.hide();
+            pageOverlay.style.display = "none";
+          }, 2000);
+        }
+
+        addForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const formData = new FormData(addForm);
+          const newAmenity = {
+            id: Date.now(),
+            name: formData.get("name"),
+            description: formData.get("description"),
+            type: formData.get("type"),
+            duration: formData.get("duration"),
+            imageFileName: formData.get("imageFileName"),
+            date: new Date().toLocaleDateString("vi-VN"),
+            author: "Admin",
+            img: "https://images.unsplash.com/photo-1556020685-ae41abfc9365?w=100",
+          };
+          amenities.push(newAmenity);
+          renderAmenities();
+          addModal.hide();
+          addForm.reset();
+          showSuccessNotification("Tiện nghi đã được thêm thành công.");
+        });
+
+        editForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const formData = new FormData(editForm);
+          const idToUpdate = parseInt(formData.get("id"));
+          const index = amenities.findIndex((item) => item.id === idToUpdate);
+          if (index !== -1) {
+            amenities[index].name = formData.get("name");
+            amenities[index].type = formData.get("type");
+            amenities[index].duration = formData.get("duration");
+            amenities[index].description = formData.get("description");
+            amenities[index].imageFileName = formData.get("imageFileName");
+          }
+          renderAmenities();
+          editModal.hide();
+          showSuccessNotification("Tiện nghi đã được cập nhật thành công.");
+        });
+
+        amenityList.addEventListener("click", function (e) {
+          if (e.target.classList.contains("btn-edit")) {
+            const id = parseInt(e.target.dataset.id);
+            const amenityToEdit = amenities.find((item) => item.id === id);
+            if (amenityToEdit) {
+              editForm.querySelector('[name="id"]').value = amenityToEdit.id;
+              editForm.querySelector('[name="name"]').value =
+                amenityToEdit.name;
+              editForm.querySelector('[name="type"]').value =
+                amenityToEdit.type;
+              editForm.querySelector('[name="duration"]').value =
+                amenityToEdit.duration;
+              editForm.querySelector('[name="description"]').value =
+                amenityToEdit.description;
+              editForm.querySelector('[name="imageFileName"]').value =
+                amenityToEdit.imageFileName;
+              editModal.show();
+            }
+          }
+          if (e.target.classList.contains("btn-delete")) {
+            amenityIdToDelete = parseInt(e.target.dataset.id);
+            deleteModal.show();
+          }
+        });
+
+        function setupFileInput(inputId, formId) {
+          const fileInput = document.getElementById(inputId);
+          const form = document.getElementById(formId);
+          const fileDisplay = form.querySelector('[name="imageFileName"]');
+          fileInput.addEventListener("change", function () {
+            if (fileInput.files.length > 0) {
+              fileDisplay.value = fileInput.files[0].name;
+            }
+          });
+        }
+        setupFileInput("add-file-input", "add-amenity-form");
+        setupFileInput("edit-file-input", "edit-amenity-form");
+
+        confirmDeleteBtn.addEventListener("click", function () {
+          if (amenityIdToDelete !== null) {
+            amenities = amenities.filter(
+              (item) => item.id !== amenityIdToDelete
+            );
+            renderAmenities();
+            deleteModal.hide();
+            showSuccessNotification("Tiện nghi này đã được xoá thành công.");
+            amenityIdToDelete = null;
+          }
+        });
+
+        renderAmenities();
+      });
+    </script>
+  </body>
+</html>
