@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Nature Hotel - Tìm kiếm phòng</title>
+    <!-- Bootstrap 5 CDN -->
+
+    <link rel="stylesheet" href="../assets/css/plugins/bootstrap.min.css" />
+    <style>
+      body {
+        background: #fafbfc;
+      }
+      .room-card {
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      .room-img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 16px 16px 0 0;
+      }
+      .sidebar-cart {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+      }
+      .star-rating {
+        color: #f6b01e;
+        font-size: 1rem;
+      }
+      .footer {
+        background: #f5f6fa;
+      }
+      .input-search {
+        border-radius: 20px;
+      }
+      .search-icon {
+        position: absolute;
+        right: 14px;
+        top: 10px;
+        color: #999;
+      }
+      .room-card .btn-primary {
+        border-radius: 16px;
+      }
+      .room-card .btn-outline-primary {
+        border-radius: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header giả lập -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-3">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#"
+          ><img
+            src="../assets/images/logo.png"
+            alt="logo"
+            height="32"
+            class="me-2"
+          />
+        </a>
+        <ul
+          class="navbar-nav me-auto mb-2 mb-lg-0"
+          style="
+            width: 60%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            margin: auto;
+            list-style: none;
+          "
+        >
+          <li class="nav-item"><a class="nav-link" href="#">Trang chủ</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Về chúng tôi</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#">Tin tức</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Liên hệ</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Khuyến mãi</a></li>
+        </ul>
+        <div class="d-flex align-items-center">
+          <a href="#"
+            ><img
+              src="https://img.icons8.com/ios-glyphs/30/000000/user--v1.png"
+              height="28"
+          /></a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="container mb-5">
+      <div class="row">
+        <!-- Main search and list -->
+        <div class="col-lg-9">
+          <!-- Breadcrumb -->
+          <nav
+            style="--bs-breadcrumb-divider: '>'; font-size: 15px"
+            aria-label="breadcrumb"
+          >
+            <ol class="breadcrumb bg-transparent px-0">
+              <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Tìm kiếm
+              </li>
+            </ol>
+          </nav>
+          <!-- Tìm kiếm filter -->
+          <div
+            class="bg-white p-3 rounded-3 mb-3 d-flex flex-wrap align-items-center gap-3 shadow-sm"
+          >
+            <div>
+              <label class="form-label mb-0">Nhận phòng</label>
+              <input
+                type="date"
+                class="form-control"
+                value="2023-12-01"
+                style="min-width: 120px"
+              />
+            </div>
+            <div>
+              <label class="form-label mb-0">Trả phòng</label>
+              <input
+                type="date"
+                class="form-control"
+                value="2023-12-03"
+                style="min-width: 120px"
+              />
+            </div>
+            <div>
+              <label class="form-label mb-0">Người lớn</label>
+              <input
+                type="number"
+                class="form-control"
+                min="1"
+                value="2"
+                style="width: 80px"
+              />
+            </div>
+            <div>
+              <label class="form-label mb-0">Trẻ em</label>
+              <input
+                type="number"
+                class="form-control"
+                min="0"
+                value="1"
+                style="width: 80px"
+              />
+            </div>
+            <div class="flex-grow-1 position-relative">
+              <input
+                type="text"
+                class="form-control input-search"
+                placeholder="Tìm kiếm..."
+                style="padding-right: 34px"
+              />
+              <span class="search-icon"><i class="bi bi-search"></i></span>
+            </div>
+            <div>
+              <button class="btn btn-primary">Tìm kiếm</button>
+            </div>
+          </div>
+          <!-- Danh sách phòng -->
+          <h6 class="mb-3 mt-4 fw-semibold">2 Phòng phù hợp</h6>
+          <!-- Card phòng 1 -->
+          <div class="room-card mb-4 bg-white">
+            <div class="row g-0">
+              <div class="col-md-5">
+                <img
+                  src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
+                  class="room-img"
+                  alt="Luxury room"
+                />
+              </div>
+              <div class="col-md-7">
+                <div class="card-body p-3 pb-2">
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <h6 class="card-title mb-1">Luxury room with city view</h6>
+                    <div class="star-rating">
+                      <span>Đánh giá:</span>
+                      <span> ★★★★★ </span>
+                    </div>
+                  </div>
+                  <div class="mb-1">
+                    <span class="fw-bold text-danger"
+                      >Giá: 2.000.000đ /đêm</span
+                    >
+                  </div>
+                  <div class="mb-2 small">
+                    Loại phòng: Phòng đôi <br />
+                    (2 giường đơn, view thành phố, bồn tắm, bàn làm việc)
+                  </div>
+                  <div class="mb-2 d-flex gap-3 small text-muted">
+                    <span
+                      ><img
+                        src="https://img.icons8.com/ios-filled/16/999999/user.png"
+                      />
+                      2</span
+                    >
+                    <span
+                      ><img
+                        src="https://img.icons8.com/ios-filled/16/999999/baby.png"
+                      />
+                      2</span
+                    >
+                    <span
+                      ><img
+                        src="https://img.icons8.com/ios-glyphs/16/999999/bed.png"
+                      />
+                      2</span
+                    >
+                  </div>
+                  <div class="d-flex gap-2">
+                    <a href="#" class="btn btn-outline-primary btn-sm"
+                      >Xem chi tiết</a
+                    >
+                    <a href="#" class="btn btn-primary btn-sm">Đặt phòng</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Card phòng 2 -->
+          <div class="room-card mb-4 bg-white">
+            <div class="row g-0">
+              <div class="col-md-5">
+                <img
+                  src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80"
+                  class="room-img"
+                  alt="Luxury room"
+                />
+              </div>
+              <div class="col-md-7">
+                <div class="card-body p-3 pb-2">
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <h6 class="card-title mb-1">Luxury room with city view</h6>
+                    <div class="star-rating">
+                      <span>Đánh giá:</span>
+                      <span> ★★★★★ </span>
+                    </div>
+                  </div>
+                  <div class="mb-1">
+                    <span class="fw-bold text-danger"
+                      >Giá: 2.000.000đ /đêm</span
+                    >
+                  </div>
+                  <div class="mb-2 small">
+                    Loại phòng: Phòng đôi <br />
+                    (2 giường đơn, view thành phố, sofa, bàn tiếp khách)
+                  </div>
+                  <div class="mb-2 d-flex gap-3 small text-muted">
+                    <span
+                      ><img
+                        src="https://img.icons8.com/ios-filled/16/999999/user.png"
+                      />
+                      2</span
+                    >
+                    <span
+                      ><img
+                        src="https://img.icons8.com/ios-filled/16/999999/baby.png"
+                      />
+                      2</span
+                    >
+                    <span
+                      ><img
+                        src="https://img.icons8.com/ios-glyphs/16/999999/bed.png"
+                      />
+                      2</span
+                    >
+                  </div>
+                  <div class="d-flex gap-2">
+                    <a href="#" class="btn btn-outline-primary btn-sm"
+                      >Xem chi tiết</a
+                    >
+                    <a href="#" class="btn btn-primary btn-sm">Đặt phòng</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Sidebar giỏ phòng -->
+        <div class="col-lg-3">
+          <ol class="breadcrumb bg-transparent px-0"></ol>
+          <div class="sidebar-cart p-3 mb-4" style="margin-top: 38px">
+            <h6 class="fw-semibold">Phiếu đặt phòng của bạn</h6>
+            <div class="text-muted small mb-2">Bạn chưa đặt phòng nào</div>
+            <button class="btn btn-light btn-sm w-100" disabled>
+              Trang thái: Đơn rỗng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-5 pt-4 pb-2">
+      <div class="container">
+        <div class="row mb-3">
+          <div class="col-lg-4">
+            <div class="fw-bold mb-2">LOGO</div>
+            <div>Địa chỉ: 34 Nguyễn Văn Huyên, Cầu Giấy, Hà Nội</div>
+            <div>Email: contact@naturehotel.vn</div>
+            <div>Số điện thoại: 1900 888 888</div>
+            <div class="mt-2">
+              <a href="#"
+                ><img
+                  src="https://img.icons8.com/ios-glyphs/20/000000/facebook-new.png"
+              /></a>
+              <a href="#"
+                ><img
+                  src="https://img.icons8.com/ios-glyphs/20/000000/instagram-new.png"
+              /></a>
+              <a href="#"
+                ><img
+                  src="https://img.icons8.com/ios-glyphs/20/000000/youtube-play.png"
+              /></a>
+            </div>
+          </div>
+          <div class="col-lg-2">
+            <div class="fw-semibold mb-2">Về chúng tôi</div>
+            <ul class="list-unstyled">
+              <li>
+                <a href="#" class="text-decoration-none text-dark"
+                  >Giới thiệu</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-dark"
+                  >Tuyển dụng</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-dark">Tin tức</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-3">
+            <div class="fw-semibold mb-2">Chính sách & Điều khoản</div>
+            <ul class="list-unstyled">
+              <li>
+                <a href="#" class="text-decoration-none text-dark"
+                  >Chính sách hoàn tiền</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-dark"
+                  >Chính sách bảo mật</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-dark"
+                  >Điều khoản sử dụng</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-3">
+            <div class="fw-semibold mb-2">Chương trình khuyến mãi</div>
+            <ul class="list-unstyled">
+              <li>
+                <a href="#" class="text-decoration-none text-dark"
+                  >Khuyến mãi hot</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-decoration-none text-dark"
+                  >Ưu đãi cho hội viên</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <hr />
+        <div class="text-center small text-muted">
+          &copy; 2025 GKTEAM | Được thiết kế bởi GKTEAM/Nhóm 10
+        </div>
+      </div>
+    </footer>
+    <script src="../assets/js/plugins/bootstrap.min.js"></script>
+    <!-- Bootstrap JS (tùy chọn) -->
+  </body>
+</html>
