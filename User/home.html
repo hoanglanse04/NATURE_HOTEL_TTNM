@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Nature Hotel - Tìm kiếm phòng</title>
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background: #ffffff;
+        margin: 0; /* Loại bỏ margin mặc định */
+        padding: 0;
+      }
+      .font-sf {
+        font-family: "SF Pro Display", "Segoe UI", Arial, sans-serif;
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .journey-bg {
+        background: url('../assets/images/banner_home.png') no-repeat center/cover;
+        position: relative;
+        width: 100vw; /* Chiều rộng toàn màn hình */
+        height: 800px; /* Chiều cao toàn màn hình */
+        overflow: hidden;
+      }
+      .journey-content {
+        position: relative;
+        z-index: 1;
+        color: #fff;
+        text-align: center;
+        padding-top: 20px;
+      }
+      .search-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        padding: 20px;
+        width: 90%;
+        max-width: 900px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .hotel-circle {
+        width: 80px;
+        height: 80px;
+        background: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        position: absolute;
+      }
+      .hotel-circle img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+      .path-line {
+        position: absolute;
+        width: 2px;
+        background: #fff;
+        z-index: 0;
+      }
+      .plane {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background: url('https://via.placeholder.com/50x50.png?text=Plane') no-repeat;
+        background-size: contain;
+        animation: fly 10s linear infinite;
+      }
+      @keyframes fly {
+        0% { transform: translateX(-100px); }
+        100% { transform: translateX(1300px); }
+      }
+    </style>
+  </head>
+  <body class="font-sf">
+    <div class="min-h-screen relative flex flex-col">
+      <!-- HEADER -->
+      <header class="flex items-center justify-between mt-5 pb-3 px-9 bg-white" style="margin-left: 270px; margin-right: 240px;">
+        <div class="flex items-center">
+          <img
+            src="../assets/images/logo.png"
+            alt="Logo"
+            class="h-auto w-28 object-contain mr-2"
+          />
+        </div>
+        <nav class="flex justify-between gap-9" style="width: 60%">
+          <a
+            href="#"
+            class="text-[15px] text-[#222] font-medium hover:underline"
+            >Trang chủ</a
+          >
+          <a
+            href="#"
+            class="text-[15px] text-[#222] font-medium hover:underline"
+            >Về chúng tôi</a
+          >
+          <a
+            href="#"
+            class="text-[15px] text-[#222] font-medium hover:underline"
+            >Tin tức</a
+          >
+          <a
+            href="#"
+            class="text-[15px] text-[#222] font-medium hover:underline"
+            >Liên hệ</a
+          >
+          <a
+            href="#"
+            class="text-[15px] text-[#222] font-medium hover:underline"
+            >Khuyến mãi</a
+          >
+        </nav>
+        <div class="flex items-center gap-3">
+          <div>
+            <svg
+              class="w-7 h-7 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </div>
+          <div>
+            <img src="../assets/images/user.png" class="w-8 h-8" alt="" />
+          </div>
+        </div>
+      </header>
+      <!-- MAIN -->
+      <main class="flex flex-row">
+        <!-- LEFT -->
+        <div class="flex-1 min-w-0">
+          <!-- JOURNEY MAP WITH SEARCH -->
+          <div class="journey-bg relative">
+            <div class="search-overlay" style="margin-top: 200px;">
+              <div class="flex flex-row gap-2">
+                <div
+                  class="flex items-center bg-white rounded-xl px-3 py-2 w-[185px] relative"
+                >
+                  <img src="../assets/images/Calendar.png" class="w-8 h-8" alt="" />
+                  <div class="mx-1"></div>
+                  <div>
+                    <label class="text-xs text-[#333] font-semibold"
+                      >Ngày nhận phòng</label
+                    >
+                    <input
+                      class="bg-transparent outline-none text-xs font-semibold w-20 text-[#333]"
+                      value="11/11/2025"
+                      type="text"
+                    />
+                  </div>
+                  <div
+                    class="absolute left-0 right-0 w-[95%] bottom-0 h-[1px] bg-black"
+                  ></div>
+                  <div
+                    class="absolute top-1/2 right-0 -translate-y-1/2 h-[80%] w-[1px] bg-gray-200 rounded"
+                  ></div>
+                </div>
+
+                <div
+                  class="flex items-center bg-white rounded-xl px-3 py-2 w-[185px] relative"
+                >
+                  <img src="../assets/images/Calendar.png" class="w-8 h-8" alt="" />
+                  <div class="mx-1"></div>
+                  <div>
+                    <label class="text-xs text-[#333] font-semibold"
+                      >Ngày trả phòng</label
+                    >
+                    <input
+                      class="bg-transparent outline-none text-xs font-semibold w-20 text-[#333]"
+                      value="12/11/2025"
+                      type="text"
+                    />
+                  </div>
+                  <div
+                    class="absolute left-0 right-0 w-[95%] bottom-0 h-[1px] bg-black"
+                  ></div>
+                  <div
+                    class="absolute top-1/2 right-0 -translate-y-1/2 h-[80%] w-[1px] bg-gray-200 rounded"
+                  ></div>
+                </div>
+
+                <div
+                  class="flex items-center bg-white rounded-xl px-3 py-2 w-[185px] relative"
+                >
+                  <img src="../assets/images/adults.png" class="w-8 h-8" alt="" />
+                  <div class="mx-1"></div>
+                  <div>
+                    <label class="text-xs text-[#333] font-semibold"
+                      >Người lớn</label
+                    >
+                    <input
+                      class="bg-transparent outline-none text-xs font-semibold w-20 text-[#333]"
+                      value="2"
+                      type="text"
+                    />
+                  </div>
+                  <div
+                    class="absolute left-0 right-0 w-[95%] bottom-0 h-[1px] bg-black"
+                  ></div>
+                  <div
+                    class="absolute top-1/2 right-0 -translate-y-1/2 h-[80%] w-[1px] bg-gray-200 rounded"
+                  ></div>
+                </div>
+                <div
+                  class="flex items-center bg-white rounded-xl px-3 py-2 w-[185px] relative"
+                >
+                  <img src="../assets/images/children.png" class="w-8 h-8" alt="" />
+                  <div class="mx-1"></div>
+                  <div>
+                    <label class="text-xs text-[#333] font-semibold">Trẻ em</label>
+                    <input
+                      class="bg-transparent outline-none text-xs font-semibold w-20 text-[#333]"
+                      value="1"
+                      type="text"
+                    />
+                  </div>
+                  <div
+                    class="absolute left-0 right-0 w-[95%] bottom-0 h-[1px] bg-black"
+                  ></div>
+                  <div
+                    class="absolute top-1/2 right-0 -translate-y-1/2 h-[80%] w-[1px] bg-gray-200 rounded"
+                  ></div>
+                </div>
+                <div class="flex items-center flex-1">
+                  <a href="../pages/booking.html" class="flex items-center bg-white rounded-xl px-4 py-2 ml-1">
+                    <svg
+                      class="w-6 h-6 text-gray-800"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle cx="11" cy="11" r="8" />
+                      <path d="M21 21l-4.35-4.35" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="plane" style="top: 10%; left: 0;"></div>
+          </div>
+          <!-- Danh sách phòng 'hot' -->
+          <section class="bg-white rounded-xl shadow-md p-10 mt-10 mx-8">
+            <h2 class="text-4xl font-bold text-[#333] mb-2 leading-tight">Danh sách<br>phòng 'hot'</h2>
+            <div class="w-20 h-2 bg-gray-400 rounded mb-8"></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+              <!-- Card 1 -->
+              <div class="bg-white rounded-xl overflow-hidden shadow-md flex flex-col">
+                <div class="relative">
+                  <a href="../pages/product_detail.html"><img src="../assets/images/p1.png" alt="Well Furnished Apartment" class="w-full h-80 object-cover"></a>
+                  <div class="absolute top-3 left-3 flex gap-1">
+                    <span class="text-yellow-400 text-xl">★</span>
+                    <span class="text-yellow-400 text-xl">★</span>
+                    <span class="text-yellow-400 text-xl">★</span>
+                    <span class="text-yellow-400 text-xl">★</span>
+                    <span class="text-yellow-400 text-xl">★</span>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <div class="font-bold text-lg mb-1" style="color:#222">Well Furnished Apartment</div>
+                  <div class="text-sm" style="color:#222">Giá: 2.000.000đ/Ngày</div>
+                </div>
+              </div>
+              <!-- Card 2 -->
+              <div class="bg-white rounded-xl overflow-hidden shadow-md flex flex-col">
+                <div class="relative">
+                  <a href="../pages/product_detail.html"><img src="../assets/images/p2.png" alt="Comfortable Family Flat" class="w-full h-80 object-cover"></a>
+                  <div class="absolute top-3 left-3 flex gap-1">
+                    <span class="text-yellow-400 text-xl">★</span>
+                    <span class="text-yellow-400 text-xl">★</span>
+                    <span class="text-yellow-400 text-xl">★</span>
+                    <span class="text-yellow-400 text-xl">★</span>
+                    <span class="text-yellow-400 text-xl">★</span>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <div class="font-bold text-lg mb-1" style="color:#222">Comfortable Family Flat</div>
+                  <div class="text-sm" style="color:#222">Giá: 2.500.000đ/Ngày</div>
+                </div>
+              </div>
+              <!-- Card 3 -->
+              <div class="bg-white rounded-xl overflow-hidden shadow-md flex flex-col">
+                <div class="relative">
+                  <a href="../pages/product_detail.html"><img src="../assets/images/p3.png" alt="Beach House Summer" class="w-full h-80 object-cover"></a>
+                  <div class="absolute top-3 left-3 flex gap-1">
+                    <span class="text-yellow-400 text-xl">★</span>
+                    <span class="text-yellow-400 text-xl">★</span>
+                    <span class="text-yellow-400 text-xl">★</span>
+                    <span class="text-yellow-400 text-xl">★</span>
+                    <span class="text-yellow-400 text-xl">★</span>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <div class="font-bold text-lg mb-1" style="color:#222">Beach House Summer</div>
+                  <div class="text-sm" style="color:#222">Giá: 1.500.000đ/Ngày</div>
+                </div>
+              </div>
+              <!-- Card 4 -->
+              <div class="bg-white rounded-xl overflow-hidden shadow-md flex flex-col">
+                <div class="relative">
+                  <a href="../pages/product_detail.html"><img src="../assets/images/p4.png" alt="Dobule Size Room" class="w-full h-80 object-cover"></a>
+                  <div class="absolute top-3 left-3 flex gap-1">
+                    <span class="text-yellow-400 text-xl">★</span>
+                    <span class="text-yellow-400 text-xl">★</span>
+                    <span class="text-yellow-400 text-xl">★</span>
+                    <span class="text-yellow-400 text-xl">★</span>
+                    <span class="text-yellow-400 text-xl">★</span>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <div class="font-bold text-lg mb-1" style="color:#222">Dobule Size Room</div>
+                  <div class="text-sm" style="color:#222">Giá: 1.800.000đ/Ngày</div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Ưu đãi mới dành cho khách hàng -->
+          <section class="bg-white rounded-xl shadow-md p-10 mt-10 mx-8">
+            <h2 class="text-3xl font-bold text-[#333] mb-2 leading-tight">Ưu đãi mới dành cho<br>khách hàng</h2>
+            <div class="w-20 h-2 bg-gray-400 rounded mb-8"></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+              <!-- Card 1 -->
+              <div class="bg-white rounded-xl overflow-hidden shadow-md flex flex-col">
+                <div class="relative">
+                  <a href="../pages/product_detail.html"><img src="../assets/images/p1.png" alt="Well Furnished Apartment" class="w-full h-64 object-cover"></a>
+                  
+                </div>
+                <div class="p-4">
+                  <div class="font-bold text-base mb-1 text-[#222]">Well Furnished Apartment</div>
+                  <div class="text-sm mb-2">
+                    Giá: <span class="line-through text-gray-500">2.500.000đ</span>
+                    <span class="text-[#e53935] font-semibold">2.000.000đ/Ngày</span>
+                  </div>
+                  <div class="flex gap-6 text-gray-700 text-base">
+                    <span><i class="fa fa-bed"></i> 3</span>
+                    <span><i class="fa fa-bath"></i> 2</span>
+                    <span><i class="fa fa-user"></i> 2</span>
+                    <span><i class="fa fa-dog"></i> 0</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Card 2 -->
+              <div class="bg-white rounded-xl overflow-hidden shadow-md flex flex-col">
+                <div class="relative">
+                  <a href="../pages/product_detail.html"><img src="../assets/images/p2.png" alt="Blue Door Villa Modern" class="w-full h-64 object-cover"></a>
+                  
+                </div>
+                <div class="p-4">
+                  <div class="font-bold text-base mb-1 text-[#222]">Blue Door Villa Modern</div>
+                  <div class="text-sm mb-2">
+                    Giá: <span class="line-through text-gray-500">2.000.000đ</span>
+                    <span class="text-[#e53935] font-semibold">1.700.000đ/Ngày</span>
+                  </div>
+                  <div class="flex gap-6 text-gray-700 text-base">
+                    <span><i class="fa fa-bed"></i> 3</span>
+                    <span><i class="fa fa-bath"></i> 1</span>
+                    <span><i class="fa fa-user"></i> 2</span>
+                    <span><i class="fa fa-dog"></i> 0</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Card 3 -->
+              <div class="bg-white rounded-xl overflow-hidden shadow-md flex flex-col">
+                <div class="relative">
+                  <a href="../pages/product_detail.html"><img src="../assets/images/p3.png" alt="Beach House Apartment" class="w-full h-64 object-cover"></a>
+                  
+                </div>
+                <div class="p-4">
+                  <div class="font-bold text-base mb-1 text-[#222]">Beach House Apartment</div>
+                  <div class="text-sm mb-2">
+                    Giá: <span class="line-through text-gray-500">2.000.000đ</span>
+                    <span class="text-[#e53935] font-semibold">1.700.000đ/Ngày</span>
+                  </div>
+                  <div class="flex gap-6 text-gray-700 text-base">
+                    <span><i class="fa fa-bed"></i> 3</span>
+                    <span><i class="fa fa-bath"></i> 1</span>
+                    <span><i class="fa fa-user"></i> 2</span>
+                    <span><i class="fa fa-dog"></i> 0</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white rounded-xl overflow-hidden shadow-md flex flex-col">
+                <div class="relative">
+                  <a href="../pages/product_detail.html"><img src="../assets/images/p4.png" alt="Beach House Apartment" class="w-full h-64 object-cover"></a>
+                  
+                </div>
+                <div class="p-4">
+                  <div class="font-bold text-base mb-1 text-[#222]">Beach House Apartment</div>
+                  <div class="text-sm mb-2">
+                    Giá: <span class="line-through text-gray-500">2.000.000đ</span>
+                    <span class="text-[#e53935] font-semibold">1.700.000đ/Ngày</span>
+                  </div>
+                  <div class="flex gap-6 text-gray-700 text-base">
+                    <span><i class="fa fa-bed"></i> 3</span>
+                    <span><i class="fa fa-bath"></i> 1</span>
+                    <span><i class="fa fa-user"></i> 2</span>
+                    <span><i class="fa fa-dog"></i> 0</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white rounded-xl overflow-hidden shadow-md flex flex-col">
+                <div class="relative">
+                  <a href="../pages/product_detail.html"><img src="../assets/images/p5.png" alt="Beach House Apartment" class="w-full h-64 object-cover"></a>
+                  
+                </div>
+                <div class="p-4">
+                  <div class="font-bold text-base mb-1 text-[#222]">Beach House Apartment</div>
+                  <div class="text-sm mb-2">
+                    Giá: <span class="line-through text-gray-500">2.000.000đ</span>
+                    <span class="text-[#e53935] font-semibold">1.700.000đ/Ngày</span>
+                  </div>
+                  <div class="flex gap-6 text-gray-700 text-base">
+                    <span><i class="fa fa-bed"></i> 3</span>
+                    <span><i class="fa fa-bath"></i> 1</span>
+                    <span><i class="fa fa-user"></i> 2</span>
+                    <span><i class="fa fa-dog"></i> 0</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white rounded-xl overflow-hidden shadow-md flex flex-col">
+                <div class="relative">
+                  <a href="../pages/product_detail.html"><img src="../assets/images/p6.png" alt="Beach House Apartment" class="w-full h-64 object-cover"></a>
+                  
+                </div>
+                <div class="p-4">
+                  <div class="font-bold text-base mb-1 text-[#222]">Beach House Apartment</div>
+                  <div class="text-sm mb-2">
+                    Giá: <span class="line-through text-gray-500">2.000.000đ</span>
+                    <span class="text-[#e53935] font-semibold">1.700.000đ/Ngày</span>
+                  </div>
+                  <div class="flex gap-6 text-gray-700 text-base">
+                    <span><i class="fa fa-bed"></i> 3</span>
+                    <span><i class="fa fa-bath"></i> 1</span>
+                    <span><i class="fa fa-user"></i> 2</span>
+                    <span><i class="fa fa-dog"></i> 0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Tin tức và Bài viết nổi bật -->
+          <section class="bg-white rounded-xl shadow-md p-10 mt-10 mx-8">
+            <h2 class="text-3xl font-bold text-[#333] mb-2 leading-tight">Tin tức và Bài viết<br>nổi bật</h2>
+            <div class="w-20 h-2 bg-gray-400 rounded mb-8"></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+              <!-- Card 1 -->
+              <div class="bg-white rounded-xl overflow-hidden shadow-md flex flex-col">
+                <img src="../assets/images/b1.png" alt="Các địa điểm du lịch nổi tiếng ở Hà Nội" class="w-full h-48 object-cover">
+                <div class="p-4">
+                  <div class="font-bold text-base mb-1 text-[#222]">Các địa điểm du lịch nổi tiếng ở Hà Nội</div>
+                  <a href="#" class="text-sm text-gray-500 hover:underline">Xem bài viết</a>
+                </div>
+              </div>
+              <!-- Card 2 -->
+              <div class="bg-white rounded-xl overflow-hidden shadow-md flex flex-col">
+                <img src="../assets/images/b2.png" alt="Ẩm thực đặc sản Hà thành" class="w-full h-48 object-cover">
+                <div class="p-4">
+                  <div class="font-bold text-base mb-1 text-[#222]">Ẩm thực đặc sản Hà thành</div>
+                  <a href="#" class="text-sm text-gray-500 hover:underline">Xem bài viết</a>
+                </div>
+              </div>
+              <!-- Card 3 -->
+              <div class="bg-white rounded-xl overflow-hidden shadow-md flex flex-col">
+                <img src="../assets/images/b3.png" alt="Bảng xếp hạng khách sạn tại Hà Nội" class="w-full h-48 object-cover">
+                <div class="p-4">
+                  <div class="font-bold text-base mb-1 text-[#222]">Bảng xếp hạng khách sạn tại Hà Nội</div>
+                  <a href="#" class="text-sm text-gray-500 hover:underline">Xem bài viết</a>
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-end mt-6">
+              <button class="bg-gray-700 text-white px-6 py-2 rounded-full hover:bg-gray-800">Xem tất cả</button>
+            </div>
+          </section>
+          <!-- TITLE + SORT -->
+        </div>
+      </main>
+    </div>
+    <footer class="bg-[#e9eaeb] text-[#222] font-[Montserrat,sans-serif]">
+      <!-- Đăng ký nhận thông tin -->
+      <div
+        class="max-w-[1200px] mx-auto flex justify-between items-center py-6 px-6 border-b border-[#e3e3e3]"
+      >
+        <div class="font-bold text-[19px]">Đăng kí nhận thông tin</div>
+        <form class="flex flex-1 ml-7 max-w-[860px]">
+          <input
+            type="email"
+            class="flex-1 rounded-full px-6 py-2 outline-none bg-[#f6f6f6] text-[#888] placeholder:text-[#888] text-base"
+            placeholder="Email của bạn ..."
+          />
+          <button
+            type="submit"
+            class="ml-[-45px] flex items-center justify-center w-[45px] h-[45px] rounded-full bg-[#bfc0c1] hover:bg-[#a6a7a8]"
+          >
+            <svg
+              class="w-6 h-6 text-white"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                transform="rotate(-90 10 10)"
+                d="M2.293 10.293a1 1 0 011.414 0l4.293 4.293V3a1 1 0 112 0v11.586l4.293-4.293a1 1 0 111.414 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414z"
+              />
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Nội dung chính của footer -->
+      <div
+        class="max-w-[1200px] mx-auto py-10 px-6 grid grid-cols-1 md:grid-cols-4 gap-10"
+      >
+        <!-- Cột 1: Logo & info -->
+        <div>
+          <div class="font-bold text-4xl mb-2 tracking-wide">
+            <img
+              src="../assets/images/logo.png"
+              alt="Logo"
+              class="h-auto w-28 object-contain mr-2"
+            />
+          </div>
+          <div class="leading-snug mb-5">
+            Khách sạn Naturel Hà Nội <br />
+            Địa chỉ: 62 Khúc Thừa Dụ, Cầu Giấy, Hà Nội<br />
+            Số điện thoại: 1234567890<br />
+            Email: company@gmail.com
+          </div>
+          <div class="flex gap-5 mt-2 text-2xl">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <!-- Cột 2 -->
+        <div>
+          <div class="font-bold text-[17px] mb-3">Về chúng tôi</div>
+          <ul class="space-y-1">
+            <li><a href="#" class="hover:underline">Giới thiệu</a></li>
+            <li><a href="#" class="hover:underline">Thông tin pháp lý</a></li>
+            <li><a href="#" class="hover:underline">Liên hệ</a></li>
+            <li><a href="#" class="hover:underline">Tin tức</a></li>
+          </ul>
+        </div>
+        <!-- Cột 3 -->
+        <div>
+          <div class="font-bold text-[17px] mb-3">
+            Chính sách & Điều khoản
+          </div>
+          <ul class="space-y-1">
+            <li>
+              <a href="#" class="hover:underline">Chính sách thanh toán</a>
+            </li>
+            <li>
+              <a href="#" class="hover:underline">Chính sách đổi - trả phòng</a>
+            </li>
+            <li><a href="#" class="hover:underline">Quy định bãi đỗ</a></li>
+            <li><a href="#" class="hover:underline">Điều khoản sử dụng</a></li>
+          </ul>
+        </div>
+        <!-- Cột 4 -->
+        <div>
+          <div class="font-bold text-[17px] mb-3">Chương trình khuyến mãi</div>
+          <ul class="space-y-1">
+            <li><a href="#" class="hover:underline">Khuyến mãi hôm nay</a></li>
+            <li>
+              <a href="#" class="hover:underline">Ưu đãi cho khách hàng mới</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Line cuối footer -->
+      <div
+        class="border-t border-[#dedede] py-4 mt-3 px-6 text-sm text-[#444] flex items-center justify-between max-w-[1200px] mx-auto"
+      >
+        <div class="font-semibold">© 2025 64KTPM1</div>
+        <div class="font-semibold">Được thiết kế bởi 64KTPM1/Nhóm 10</div>
+      </div>
+    </footer>
+
+    <!-- FontAwesome 6 CDN cho icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </body>
+</html>

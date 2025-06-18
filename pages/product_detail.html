@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Nature Hotel - Chi tiết phòng</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+</head>
+<body class="bg-[#f7f7f7] font-sans">
+  <!-- HEADER -->
+  <header class="flex items-center justify-between mt-5 pb-3 px-9" style="margin-left: 270px; margin-right: 240px;">
+    <div class="flex items-center">
+      <img
+        src="../assets/images/logo.png"
+        alt="Logo"
+        class="h-auto w-28 object-contain mr-2"
+      />
+    </div>
+    <nav class="flex justify-between gap-9" style="width: 60%">
+      <a
+        href="../User/home.html"
+        class="text-[15px] text-[#222] font-medium hover:underline"
+        >Trang chủ</a
+      >
+      <a
+        href="#"
+        class="text-[15px] text-[#222] font-medium hover:underline"
+        >Về chúng tôi</a
+      >
+      <a
+        href="#"
+        class="text-[15px] text-[#222] font-medium hover:underline"
+        >Tin tức</a
+      >
+      <a
+        href="#"
+        class="text-[15px] text-[#222] font-medium hover:underline"
+        >Liên hệ</a
+      >
+      <a
+        href="#"
+        class="text-[15px] text-[#222] font-medium hover:underline"
+        >Khuyến mãi</a
+      >
+    </nav>
+    <div class="flex items-center gap-3">
+      <div>
+        <svg
+          class="w-7 h-7 text-gray-400"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </div>
+      <div>
+        <img src="../assets/images/user.png" class="w-8 h-8" alt="" />
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="max-w-7xl mx-auto mt-8 flex flex-col lg:flex-row gap-8">
+    <!-- LEFT: ẢNH & THÔNG TIN -->
+    <div class="flex-1">
+      <!-- Ảnh chi tiết phòng (chiếm toàn bộ chiều ngang) -->
+      <div class="flex gap-6 mb-8">
+        <!-- Ảnh lớn -->
+        <div class="w-[650px] h-[400px]">
+          <img src="../assets/images/detail.png" class="rounded-xl w-full h-full object-cover" alt="Ảnh phòng lớn" />
+        </div>
+        <!-- 4 ảnh nhỏ: 2 hàng 2 cột -->
+        <div class="grid grid-cols-2 grid-rows-2 gap-4 w-[650px] h-[400px]">
+          <img src="../assets/images/detail1.png" class="rounded-xl w-full h-full object-cover" alt="Ảnh nhỏ 1" />
+          <img src="../assets/images/detail2.png" class="rounded-xl w-full h-full object-cover" alt="Ảnh nhỏ 2" />
+          <img src="../assets/images/detail3.png" class="rounded-xl w-full h-full object-cover" alt="Ảnh nhỏ 3" />
+          <img src="../assets/images/detail4.png" class="rounded-xl w-full h-full object-cover" alt="Ảnh nhỏ 4" />
+        </div>
+      </div>
+      <!-- Thông tin phòng + Phiếu đặt phòng trên cùng một hàng -->
+      <div class="flex gap-8 mb-8">
+        <!-- Thông tin phòng -->
+        <div class="flex-1 bg-white rounded-xl p-6 shadow">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <h1 class="text-2xl font-bold text-[#222]">Luxury room with city view</h1>
+                    <div class="flex items-center gap-2" style="margin-left: 380px;">
+                      <span class="text-gray-600 text-base">Đánh giá:</span>
+                      <span class="text-yellow-400 text-lg">★ ★ ★ ★ ★</span>
+                      <button class="ml-2 text-gray-500 hover:text-blue-500"><i class="fa fa-share-alt text-3xl"></i></button>
+                    </div>
+                  </div>
+              <div class="text-lg font-semibold text-[#2e7d32] mt-1">2.500.000đ/Đêm</div>
+              <div class="text-sm text-gray-500">Loại phòng: Phòng đôi</div>
+              <div class="text-sm text-gray-500">Địa chỉ: 62 Khúc Thừa Dụ, Cầu Giấy, Hà Nội</div>
+            </div>
+            
+          </div>
+          <div class="flex gap-6 mt-4">
+            <div class="flex items-center gap-2 text-gray-700"><i class="fa fa-bed"></i> 3 phòng ngủ</div>
+            <div class="flex items-center gap-2 text-gray-700"><i class="fa fa-bath"></i> 2 phòng tắm</div>
+            <div class="flex items-center gap-2 text-gray-700"><i class="fa fa-ruler-combined"></i> 80 m²</div>
+            <div class="flex items-center gap-2 text-gray-700"><i class="fa fa-user"></i> 6 khách</div>
+            <button class="ml-4 px-5 py-2 bg-[#2e7d32] text-white rounded-lg font-semibold hover:bg-[#256029]" style="margin-left: 310px; background-color: rgb(0, 183, 255);">Đặt phòng</button>
+          </div>
+        </div>
+        <!-- Phiếu đặt phòng -->
+        <div class="w-[320px] bg-white rounded-xl shadow p-6 h-fit">
+          <h3 class="font-bold text-lg mb-2">Phiếu đặt phòng của bạn</h3>
+          <input type="text" placeholder="Bạn chưa đặt phòng nào" class="w-full border rounded-lg px-4 py-2 mb-2" disabled>
+          <div class="text-right text-gray-500 text-sm">Tổng cộng: 0đ</div>
+        </div>
+      </div>
+      <!-- MÔ TẢ -->
+      <div class="flex-1">
+        <div class="bg-white rounded-xl p-6 shadow mb-6">
+          <h2 class="font-bold text-lg mb-2">Mô tả thông tin phòng</h2>
+          <ul class="list-disc pl-5 text-gray-700 text-sm space-y-1">
+            <li>Phòng rộng rãi, view thành phố tuyệt đẹp.</li>
+            <li>Trang bị đầy đủ tiện nghi: TV, điều hòa, minibar, máy sấy tóc...</li>
+            <li>Phù hợp cho gia đình hoặc nhóm bạn.</li>
+          </ul>
+        </div>
+        <!-- TIỆN ÍCH -->
+        <div class="bg-white rounded-xl p-6 shadow mb-6">
+          <h2 class="font-bold text-lg mb-2">Tiện ích phòng</h2>
+          <div class="flex flex-wrap gap-4 text-gray-700 text-sm">
+            <span class="flex items-center gap-2"><i class="fa fa-wifi"></i> Wifi miễn phí</span>
+            <span class="flex items-center gap-2"><i class="fa fa-tv"></i> TV màn hình phẳng</span>
+            <span class="flex items-center gap-2"><i class="fa fa-snowflake"></i> Điều hòa 2 chiều</span>
+            <span class="flex items-center gap-2"><i class="fa fa-coffee"></i> Máy pha cà phê</span>
+            <span class="flex items-center gap-2"><i class="fa fa-parking"></i> Bãi đỗ xe miễn phí</span>
+          </div>
+        </div>
+        <!-- AN TOÀN & VỆ SINH -->
+        <div class="bg-white rounded-xl p-6 shadow mb-6">
+          <h2 class="font-bold text-lg mb-2">An toàn và Vệ sinh</h2>
+          <div class="flex flex-wrap gap-4 text-gray-700 text-sm">
+            <span class="flex items-center gap-2"><i class="fa fa-broom"></i> Dọn phòng mỗi ngày</span>
+            <span class="flex items-center gap-2"><i class="fa fa-shield-alt"></i> Đảm bảo PCCC</span>
+            <span class="flex items-center gap-2"><i class="fa fa-hands-wash"></i> Sát khuẩn tay miễn phí</span>
+          </div>
+        </div>
+        <!-- BẢN ĐỒ -->
+        <div class="bg-white rounded-xl p-6 shadow mb-6">
+          <h2 class="font-bold text-lg mb-2">Vị trí khách sạn</h2>
+          <iframe src="https://www.google.com/maps?q=21.036237,105.782889&z=15&output=embed" width="100%" height="300" class="rounded-lg border" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#e9eaeb] text-[#222] mt-10">
+    <div class="max-w-7xl mx-auto py-10 px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
+      <!-- Cột 1: Logo & info -->
+      <div>
+        <div class="font-bold text-2xl mb-2 tracking-wide">
+          <img src="../assets/images/logo.png" alt="Logo" class="h-auto w-28 object-contain mr-2" />
+        </div>
+        <div class="leading-snug mb-5">
+          Khách sạn Naturel Hà Nội <br />
+          Địa chỉ: 62 Khúc Thừa Dụ, Cầu Giấy, Hà Nội<br />
+          Số điện thoại: 1234567890<br />
+          Email: company@gmail.com
+        </div>
+        <div class="flex gap-5 mt-2 text-2xl">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <!-- Cột 2 -->
+      <div>
+        <div class="font-bold text-[17px] mb-3">Về chúng tôi</div>
+        <ul class="space-y-1">
+          <li><a href="#" class="hover:underline">Giới thiệu</a></li>
+          <li><a href="#" class="hover:underline">Thông tin pháp lý</a></li>
+          <li><a href="#" class="hover:underline">Liên hệ</a></li>
+          <li><a href="#" class="hover:underline">Tin tức</a></li>
+        </ul>
+      </div>
+      <!-- Cột 3 -->
+      <div>
+        <div class="font-bold text-[17px] mb-3">Chính sách & Điều khoản</div>
+        <ul class="space-y-1">
+          <li><a href="#" class="hover:underline">Chính sách thanh toán</a></li>
+          <li><a href="#" class="hover:underline">Chính sách đổi - trả phòng</a></li>
+          <li><a href="#" class="hover:underline">Quy định bãi đỗ</a></li>
+          <li><a href="#" class="hover:underline">Điều khoản sử dụng</a></li>
+        </ul>
+      </div>
+      <!-- Cột 4 -->
+      <div>
+        <div class="font-bold text-[17px] mb-3">Chương trình khuyến mãi</div>
+        <ul class="space-y-1">
+          <li><a href="#" class="hover:underline">Khuyến mãi hôm nay</a></li>
+          <li><a href="#" class="hover:underline">Ưu đãi cho khách hàng mới</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-[#dedede] py-4 mt-3 px-6 text-sm text-[#444] flex items-center justify-between max-w-7xl mx-auto">
+      <div class="font-semibold">© 2025 64KTPM1</div>
+      <div class="font-semibold">Được thiết kế bởi 64KTPM1/Nhóm 10</div>
+    </div>
+  </footer>
+</body>
+</html>
