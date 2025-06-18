@@ -355,7 +355,7 @@
                     Xem chi tiết
                   </button>
                   <button
-                    class="w-full px-5 py-2 rounded-lg bg-[#2196F3] hover:bg-[#1769aa] text-white text-[14px] font-semibold shadow"
+                    class="w-full px-5 py-2 rounded-lg bg-[#2196F3] hover:bg-[#1769aa] text-white text-[14px] font-semibold shadow btn-book"
                   >
                     Đặt phòng
                   </button>
@@ -444,7 +444,7 @@
                     Xem chi tiết
                   </button>
                   <button
-                    class="w-full px-5 py-2 rounded-lg bg-[#2196F3] hover:bg-[#1769aa] text-white text-[14px] font-semibold shadow"
+                    class="w-full px-5 py-2 rounded-lg bg-[#2196F3] hover:bg-[#1769aa] text-white text-[14px] font-semibold shadow btn-book"
                   >
                     Đặt phòng
                   </button>
@@ -455,21 +455,32 @@
         </div>
         <!-- SIDEBAR ĐƠN PHÒNG -->
         <div class="w-[325px] flex-shrink-0 pt-10">
-          <div class="bg-white rounded-xl shadow-md border border-gray-100 p-5">
-            <div class="font-medium text-[#232323] mb-3">
+          <div class="sticky top-8 bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+            <div class="text-[22px] font-medium text-[#444] mb-3">
               Phiếu đặt phòng của bạn
             </div>
-            <div
-              class="border rounded-md px-3 py-2 text-sm text-[#929292] mb-2"
-            >
-              Bạn chưa đặt phòng nào
+            <div class="border-b border-[#ededed] -mx-6 mb-5"></div>
+            <div id="cart-content">
+              <div class="mb-6 border border-gray-300 rounded px-4 py-3 text-[16px] text-[#757575] bg-white">
+                Bạn chưa đặt phòng nào
+              </div>
             </div>
-            <div class="text-right text-[15px] text-[#888]">
-              Tổng tiền: <span class="font-bold text-[#232323]">0đ</span>
+            <div class="flex justify-end mt-2">
+              <span class="text-[16px] text-[#616161]">
+                Tổng tiền:
+                <span id="cart-total" class="font-bold text-[#232323]">0đ</span>
+              </span>
             </div>
+            <button id="confirm-booking"
+              class="w-full mt-5 py-3 rounded-full bg-[#222] text-white font-semibold text-[16px] shadow transition hover:bg-[#111]"
+              style="display:none;">
+              <a href="./checkout.html">Xác nhận đặt phòng</a>
+              
+            </button>
           </div>
         </div>
-      </main>
+        
+                
     </div>
     <footer class="bg-[#e9eaeb] text-[#222] font-[Montserrat,sans-serif]">
       <!-- Đăng ký nhận thông tin -->
@@ -584,4 +595,85 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   />
+  <script>
+    // Danh sách phòng đã chọn (nhiều phòng)
+    let cartRooms = [];
+  
+    // Demo data mẫu, thực tế bạn lấy từ card phòng vừa click
+    const sampleRoom = () => ({
+      id: Date.now() + Math.random(), // random id demo
+      name: "Luxury room with city view",
+      price: 2500000,
+      guest: 3,
+      bed: 2,
+      car: 2,
+      roomType: "Phòng đôi",
+      date: "4/6/2025-6/6/2025",
+      total: 2500000
+    });
+  
+    // Khi ấn "Đặt phòng" trên từng phòng
+    document.querySelectorAll('.btn-book').forEach(btn => {
+      btn.addEventListener('click', function() {
+        cartRooms.push(sampleRoom());
+        renderCart();
+      });
+    });
+  
+    // Hàm render lại giỏ phòng bên phải
+    function renderCart() {
+      const cartDiv = document.getElementById('cart-content');
+      if (cartRooms.length === 0) {
+        cartDiv.innerHTML = `
+          <div class="mb-6 border border-gray-300 rounded px-4 py-3 text-[16px] text-[#757575] bg-white">
+            Bạn chưa đặt phòng nào
+          </div>
+        `;
+        document.getElementById('cart-total').textContent = '0đ';
+        document.getElementById('confirm-booking').style.display = 'none';
+        return;
+      }
+  
+      let total = 0;
+      cartDiv.innerHTML = cartRooms.map((room, idx) => {
+        total += room.total;
+        return `
+          <div class="border border-gray-300 rounded px-4 py-3 mb-4 relative bg-white">
+            <div class="flex justify-between items-start mb-1">
+              <div class="font-bold text-[16px] text-[#232323]">${room.name}</div>
+              <button onclick="removeRoom(${room.id})" class="absolute top-2 right-2 text-[#444] hover:text-red-500" title="Xoá phòng">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+            <div class="font-bold text-[15px] mb-1">Giá:  ${room.price.toLocaleString()}đ / Đêm</div>
+            <div class="text-[15px]">${room.date}</div>
+            <div class="flex items-center mt-2 text-[17px] font-bold gap-5">
+              <div class="flex items-center gap-1">
+                <img src="../assets/images/bed.png" class="w-6 h-6" alt="">
+                <span class="text-base font-bold text-[#232323]">${room.guest}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <img src="../assets/images/bath.png" class="w-6 h-6" alt="">
+                <span class="text-base font-bold text-[#232323]">${room.bed}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <img src="../assets/images/car.png" class="w-6 h-6" alt="">
+                <span class="text-base font-bold text-[#232323]">${room.car}</span>
+              </div>
+              <span class="ml-auto font-medium text-[14px]">${room.roomType}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+      document.getElementById('cart-total').textContent = total.toLocaleString() + 'đ';
+      document.getElementById('confirm-booking').style.display = '';
+    }
+  
+    // Xóa 1 phòng theo id (gắn trên nút X)
+    window.removeRoom = function(id) {
+      cartRooms = cartRooms.filter(room => room.id !== id);
+      renderCart();
+    }
+  </script>
+  
 </html>
