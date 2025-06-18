@@ -1,0 +1,304 @@
+body {
+  font-family: "Roboto", sans-serif;
+  background: #f6f7fb;
+}
+.main-content {
+  padding: 32px 24px;
+  background: #f6f7fb;
+  min-height: 100vh;
+}
+.navbar {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(67, 94, 190, 0.07);
+  padding: 20px 32px;
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+}
+.navbar-actions .user-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.user-actions .user-text {
+  font-size: 15px;
+  color: #222;
+  font-weight: 500;
+  margin-right: 10px;
+}
+.user-actions i {
+  font-size: 22px;
+  color: #b0b3c6;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+.user-actions i:hover {
+  color: #435ebe;
+}
+.statistics-content-section {
+  padding: 0;
+  background: transparent;
+}
+.filter-bar {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 32px;
+}
+.filter-dropdown {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #e0e3ed;
+  border-radius: 10px;
+  padding: 10px 20px;
+  box-shadow: 0 1px 4px rgba(67, 94, 190, 0.04);
+  transition: box-shadow 0.2s;
+}
+.filter-dropdown:focus-within {
+  box-shadow: 0 2px 8px rgba(67, 94, 190, 0.10);
+}
+.filter-dropdown span {
+  font-size: 15px;
+  color: #6c757d;
+  margin-right: 10px;
+}
+.filter-dropdown select {
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  color: #222;
+  font-weight: 500;
+  appearance: none;
+  padding-right: 25px;
+  cursor: pointer;
+}
+.filter-dropdown select:focus {
+  outline: none;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+.stat-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 20px 16px;         /* Giảm padding */
+  box-shadow: 0 2px 12px rgba(67, 94, 190, 0.09);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 80px;           /* Giảm chiều cao tối thiểu */
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.stat-card:hover {
+  box-shadow: 0 8px 24px rgba(67, 94, 190, 0.13);
+  transform: translateY(-2px) scale(1.02);
+}
+.stat-card .stat-label {
+  font-size: 13px;            /* Giảm font-size */
+  margin-bottom: 8px;
+}
+.stat-card .stat-value {
+  font-size: 1.4rem;          /* Giảm font-size */
+}
+.stat-card .stat-sub-value {
+  font-size: 1rem;
+}
+.performance-sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+.performance-sections .card {
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(67, 94, 190, 0.07);
+  padding: 28px 24px;
+  background: #fff;
+}
+.performance-sections .card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 22px;
+}
+.performance-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+  gap: 16px;
+}
+.performance-item:last-child {
+  margin-bottom: 0;
+}
+.item-thumbnail {
+  width: 44px;
+  height: 32px;
+  border-radius: 7px;
+  object-fit: cover;
+  background: #f0f0f0;
+}
+.item-details {
+  flex-grow: 1;
+}
+.item-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 6px;
+}
+.progress-bar-container {
+  width: 100%;
+  background: #f4f6fb;
+  border-radius: 4px;
+  height: 7px;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6 60%, #60a5fa 100%);
+  border-radius: 4px;
+  transition: width 0.5s;
+}
+.performance-item:nth-child(2) .progress-bar {
+  background: linear-gradient(90deg, #fb923c 60%, #fdba74 100%);
+}
+.performance-item:nth-child(3) .progress-bar {
+  background: linear-gradient(90deg, #ef4444 60%, #f87171 100%);
+}
+.service-performance .performance-item:nth-child(1) .progress-bar {
+  background: linear-gradient(90deg, #22c55e 60%, #4ade80 100%);
+}
+.service-performance .performance-item:nth-child(2) .progress-bar {
+  background: linear-gradient(90deg, #84cc16 60%, #bef264 100%);
+}
+.service-performance .performance-item:nth-child(3) .progress-bar {
+  background: linear-gradient(90deg, #a3e635 60%, #d9f99d 100%);
+}
+.item-percentage {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+  margin-left: 10px;
+}
+.item-status {
+  font-size: 13px;
+  color: #22c55e;
+  margin-left: 10px;
+  font-weight: 500;
+}
+.top-customers-card {
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(67, 94, 190, 0.07);
+  background: #fff;
+  padding: 28px 24px;
+}
+.top-customers-card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 22px;
+}
+.customer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.customer-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f1f7;
+}
+.customer-item:last-child {
+  border-bottom: none;
+}
+.customer-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #f0f0f0;
+}
+.customer-info {
+  flex-grow: 1;
+}
+.customer-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 2px;
+}
+.customer-details {
+  font-size: 13px;
+  color: #8b95b6;
+}
+.customer-rank {
+  font-size: 18px;
+  font-weight: 700;
+  color: #222;
+  margin-left: auto;
+}
+.trend-up {
+  color: #22c55e;
+  font-size: 20px;
+  margin-left: 7px;
+}
+.trend-down {
+  color: #ef4444;
+  font-size: 20px;
+  margin-left: 7px;
+}
+/* Responsive */
+@media (max-width: 992px) {
+  .performance-sections {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 768px) {
+  .main-content {
+    padding: 18px 4px;
+  }
+  .navbar {
+    padding: 12px 8px;
+  }
+  .filter-bar {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .main-content {
+    padding: 8px 2px;
+  }
+  .navbar h1 {
+    font-size: 1.2rem;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .stat-card {
+    padding: 14px 6px;
+  }
+  .performance-sections,
+  .top-customers-card {
+    padding: 8px 2px;
+  }
+  .filter-dropdown {
+    width: 100%;
+  }
+}
