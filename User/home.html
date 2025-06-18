@@ -156,15 +156,10 @@
                 >
                   <img src="../assets/images/Calendar.png" class="w-8 h-8" alt="" />
                   <div class="mx-1"></div>
-                  <div>
-                    <label class="text-xs text-[#333] font-semibold"
-                      >Ngày nhận phòng</label
-                    >
-                    <input
-                      class="bg-transparent outline-none text-xs font-semibold w-20 text-[#333]"
-                      value="11/11/2025"
-                      type="text"
-                    />
+                  <div class="flex-1">
+                    <label class="text-xs text-[#333] font-semibold">Ngày nhận phòng</label>
+                    <input id="checkin" class="bg-transparent outline-none text-xs font-semibold w-20 text-[#333]" value="11/11/2025" type="text" />
+                    <div id="error-checkin" class="text-red-500 text-[11px] mt-1 hidden">Vui lòng nhập thông tin</div>
                   </div>
                   <div
                     class="absolute left-0 right-0 w-[95%] bottom-0 h-[1px] bg-black"
@@ -179,15 +174,10 @@
                 >
                   <img src="../assets/images/Calendar.png" class="w-8 h-8" alt="" />
                   <div class="mx-1"></div>
-                  <div>
-                    <label class="text-xs text-[#333] font-semibold"
-                      >Ngày trả phòng</label
-                    >
-                    <input
-                      class="bg-transparent outline-none text-xs font-semibold w-20 text-[#333]"
-                      value="12/11/2025"
-                      type="text"
-                    />
+                  <div class="flex-1">
+                    <label class="text-xs text-[#333] font-semibold">Ngày trả phòng</label>
+                    <input id="checkout" class="bg-transparent outline-none text-xs font-semibold w-20 text-[#333]" value="12/11/2025" type="text" />
+                    <div id="error-checkout" class="text-red-500 text-[11px] mt-1 hidden">Vui lòng nhập thông tin</div>
                   </div>
                   <div
                     class="absolute left-0 right-0 w-[95%] bottom-0 h-[1px] bg-black"
@@ -197,20 +187,13 @@
                   ></div>
                 </div>
 
-                <div
-                  class="flex items-center bg-white rounded-xl px-3 py-2 w-[185px] relative"
-                >
+                <div class="flex items-center bg-white rounded-xl px-3 py-2 w-[185px] relative">
                   <img src="../assets/images/adults.png" class="w-8 h-8" alt="" />
                   <div class="mx-1"></div>
-                  <div>
-                    <label class="text-xs text-[#333] font-semibold"
-                      >Người lớn</label
-                    >
-                    <input
-                      class="bg-transparent outline-none text-xs font-semibold w-20 text-[#333]"
-                      value="2"
-                      type="text"
-                    />
+                  <div class="flex-1">
+                    <label class="text-xs text-[#333] font-semibold">Người lớn</label>
+                    <input id="adults" class="bg-transparent outline-none text-xs font-semibold w-20 text-[#333]" value="2" type="text" />
+                    <div id="error-adults" class="text-red-500 text-[11px] mt-1 hidden">Vui lòng nhập thông tin</div>
                   </div>
                   <div
                     class="absolute left-0 right-0 w-[95%] bottom-0 h-[1px] bg-black"
@@ -224,13 +207,10 @@
                 >
                   <img src="../assets/images/children.png" class="w-8 h-8" alt="" />
                   <div class="mx-1"></div>
-                  <div>
+                  <div class="flex-1">
                     <label class="text-xs text-[#333] font-semibold">Trẻ em</label>
-                    <input
-                      class="bg-transparent outline-none text-xs font-semibold w-20 text-[#333]"
-                      value="1"
-                      type="text"
-                    />
+                    <input id="children" class="bg-transparent outline-none text-xs font-semibold w-20 text-[#333]" value="1" type="text" />
+                    <div id="error-children" class="text-red-500 text-[11px] mt-1 hidden">Vui lòng nhập thông tin</div>
                   </div>
                   <div
                     class="absolute left-0 right-0 w-[95%] bottom-0 h-[1px] bg-black"
@@ -240,7 +220,7 @@
                   ></div>
                 </div>
                 <div class="flex items-center flex-1">
-                  <a href="../pages/booking.html" class="flex items-center bg-white rounded-xl px-4 py-2 ml-1">
+                  <a id="search-btn" href="../pages/booking.html" class="flex items-center bg-white rounded-xl px-4 py-2 ml-1">
                     <svg
                       class="w-6 h-6 text-gray-800"
                       fill="none"
@@ -605,5 +585,48 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <script>
+    document.getElementById('search-btn').onclick = function(e) {
+      let valid = true;
+      // Check-in
+      const checkin = document.getElementById('checkin');
+      const errorCheckin = document.getElementById('error-checkin');
+      if (!checkin.value.trim()) {
+        errorCheckin.classList.remove('hidden');
+        valid = false;
+      } else {
+        errorCheckin.classList.add('hidden');
+      }
+      // Check-out
+      const checkout = document.getElementById('checkout');
+      const errorCheckout = document.getElementById('error-checkout');
+      if (!checkout.value.trim()) {
+        errorCheckout.classList.remove('hidden');
+        valid = false;
+      } else {
+        errorCheckout.classList.add('hidden');
+      }
+      // Adults
+      const adults = document.getElementById('adults');
+      const errorAdults = document.getElementById('error-adults');
+      if (!adults.value.trim()) {
+        errorAdults.classList.remove('hidden');
+        valid = false;
+      } else {
+        errorAdults.classList.add('hidden');
+      }
+      // Children
+      const children = document.getElementById('children');
+      const errorChildren = document.getElementById('error-children');
+      if (!children.value.trim()) {
+        errorChildren.classList.remove('hidden');
+        valid = false;
+      } else {
+        errorChildren.classList.add('hidden');
+      }
+      // Nếu có trường rỗng thì ngăn chuyển trang
+      if (!valid) e.preventDefault();
+    };
+    </script>
   </body>
 </html>

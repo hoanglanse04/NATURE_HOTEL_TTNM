@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Nature Hotel - Tìm kiếm phòng</title>
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background: #ffffff;
+      }
+      .font-sf {
+        font-family: "SF Pro Display", "Segoe UI", Arial, sans-serif;
+      }
+      /* Ẩn scroll khi nhỏ */
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </head>
+  <body class="font-sf">
+    <div
+      class="bg-[#fff] max-w-[1200px] min-h-screen mx-auto rounded-2xl px-0 pt-0 pb-10 relative flex flex-col"
+    >
+      <!-- HEADER -->
+      <header class="flex items-center justify-between mt-5 pb-3 px-9">
+        <div class="flex items-center">
+          <img
+            src="../assets/images/logo.png"
+            alt="Logo"
+            class="h-auto w-28 object-contain mr-2"
+          />
+        </div>
+        <nav class="flex justify-between gap-9" style="width: 60%">
+          <a
+            href="#"
+            class="text-[15px] text-[#222] font-medium hover:underline"
+            >Trang chủ</a
+          >
+          <a
+            href="#"
+            class="text-[15px] text-[#222] font-medium hover:underline"
+            >Về chúng tôi</a
+          >
+          <a
+            href="#"
+            class="text-[15px] text-[#222] font-medium hover:underline"
+            >Tin tức</a
+          >
+          <a
+            href="#"
+            class="text-[15px] text-[#222] font-medium hover:underline"
+            >Liên hệ</a
+          >
+          <a
+            href="#"
+            class="text-[15px] text-[#222] font-medium hover:underline"
+            >Khuyến mãi</a
+          >
+        </nav>
+        <div class="flex items-center gap-3">
+          <div>
+            <svg
+              class="w-7 h-7 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </div>
+          <div>
+            <img src="../assets/images/user.png" class="w-8 h-8" alt="" />
+          </div>
+        </div>
+      </header>
+      <!-- MAIN -->
+      <main class="flex flex-row px-8 pt-1 pb-10 gap-7">
+        <!-- LEFT -->
+        <div class="flex-1 min-w-0">
+          <!-- Breadcrumb -->
+          <div class="text-[15px] text-gray-500 pt-2 pb-1 font-semibold">
+            <div class="flex items-center mb-3">
+              <svg class="w-3 h-3 " fill="none" stroke="#222" stroke-width="4" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 19l-7-7 7-7"/>
+              </svg>
+              <svg class="w-3 h-3 mr-2" fill="none" stroke="#222" stroke-width="4" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 19l-7-7 7-7"/>
+              </svg>
+              <span class="font-bold leading-none"><a href="./booking.html">Đơn đặt phòng</a></span>
+            </div>          </div>
+          <!-- INPUTS FILTER BAR -->
+          <div class="max-w-[1080px] mx-auto pt-12 px-8 pb-10">
+            <!-- Back -->
+            
+        
+            <!-- Line -->
+            <div class="border-b border-[#ededed] mb-6 mt-3"></div>
+        
+            <!-- Danh sách phòng -->
+            <div class="max-w-[1080px] mx-auto pt-12 px-8 pb-10">
+              <!-- ... Tiêu đề & line ... -->
+              <!-- Danh sách phòng -->
+              <div id="room-list" class="space-y-6"></div>
+              <!-- Tổng tiền -->
+              <div class="flex justify-end mt-7 mb-3">
+                <span class="text-[16px] text-[#616161]">
+                  Tổng tiền:
+                  <span id="room-total" class="font-bold text-[#232323] text-[17px]">0đ</span>
+                </span>
+              </div>
+              <!-- Ghi chú & nút thanh toán -->
+              <div class="mb-6">
+                <label for="note" class="block mb-2 text-[15px] text-[#444]">Ghi chú</label>
+                <textarea id="note" rows="4"
+                  class="w-full border border-[#d7d7d7] rounded-lg px-4 py-3 text-[15px] text-[#333] resize-none focus:outline-none focus:border-[#333] bg-white"
+                  placeholder=""></textarea>
+              </div>
+              <div class="flex justify-end">
+                <button id="btn-pay" class="w-[230px] h-[54px] rounded-full bg-[#222] hover:bg-[#111] text-white font-semibold text-[18px] shadow">
+                  Thanh toán
+                </button>
+              </div>
+            </div>
+            
+          </div>
+          <!-- TITLE + SORT -->
+        
+          
+          <!-- CARD PHÒNG 1 -->
+          
+          <!-- CARD PHÒNG 2 -->
+          
+        </div>
+        <!-- SIDEBAR ĐƠN PHÒNG -->
+        
+        
+                
+    </div>
+    <footer class="bg-[#e9eaeb] text-[#222] font-[Montserrat,sans-serif]">
+      <!-- Đăng ký nhận thông tin -->
+      <div
+        class="max-w-[1200px] mx-auto flex justify-between items-center py-6 px-6 border-b border-[#e3e3e3]"
+      >
+        <div class="font-bold text-[19px]">Đăng kí nhận thông tin</div>
+        <form class="flex flex-1 ml-7 max-w-[860px]">
+          <input
+            type="email"
+            class="flex-1 rounded-full px-6 py-2 outline-none bg-[#f6f6f6] text-[#888] placeholder:text-[#888] text-base"
+            placeholder="Email của bạn ..."
+          />
+          <button
+            type="submit"
+            class="ml-[-45px] flex items-center justify-center w-[45px] h-[45px] rounded-full bg-[#bfc0c1] hover:bg-[#a6a7a8]"
+          >
+            <svg
+              class="w-6 h-6 text-white"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                transform="rotate(-90 10 10)"
+                d="M2.293 10.293a1 1 0 011.414 0l4.293 4.293V3a1 1 0 112 0v11.586l4.293-4.293a1 1 0 111.414 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414z"
+              />
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Nội dung chính của footer -->
+      <div
+        class="max-w-[1200px] mx-auto py-10 px-6 grid grid-cols-1 md:grid-cols-4 gap-10"
+      >
+        <!-- Cột 1: Logo & info -->
+        <div>
+          <div class="font-bold text-4xl mb-2 tracking-wide">
+            <img
+              src="../assets/images/logo.png"
+              alt="Logo"
+              class="h-auto w-28 object-contain mr-2"
+            />
+          </div>
+          <div class="leading-snug mb-5">
+            Khách sạn Naturel Hà Nội <br />
+
+            Địa chỉ: 62 Khúc Thừa Dụ, Cầu Giấy, Hà Nội<br />
+            Số điện thoại: 1234567890<br />
+            Email: company@gmail.com
+          </div>
+          <div class="flex gap-5 mt-2 text-2xl">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <!-- Cột 2 -->
+        <div>
+          <div class="font-bold text-[17px] mb-3">Về chúng tôi</div>
+          <ul class="space-y-1">
+            <li><a href="#" class="hover:underline">Giới thiệu</a></li>
+            <li><a href="#" class="hover:underline">Thông tin pháp lý</a></li>
+            <li><a href="#" class="hover:underline">Liên hệ</a></li>
+            <li><a href="#" class="hover:underline">Tin tức</a></li>
+          </ul>
+        </div>
+        <!-- Cột 3 -->
+        <div>
+          <div class="font-bold text-[17px] mb-3">
+            Chính sách &amp; Điều khoản
+          </div>
+          <ul class="space-y-1">
+            <li>
+              <a href="#" class="hover:underline">Chính sách thanh toán</a>
+            </li>
+            <li>
+              <a href="#" class="hover:underline">Chính sách đổi - trả phòng</a>
+            </li>
+            <li><a href="#" class="hover:underline">Quy định bãi đỗ</a></li>
+            <li><a href="#" class="hover:underline">Điều khoản sử dụng</a></li>
+          </ul>
+        </div>
+        <!-- Cột 4 -->
+        <div>
+          <div class="font-bold text-[17px] mb-3">Chương trình khuyến mãi</div>
+          <ul class="space-y-1">
+            <li><a href="#" class="hover:underline">Khuyến mãi hôm nay</a></li>
+            <li>
+              <a href="#" class="hover:underline">Ưu đãi cho khách hàng mới</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Line cuối footer -->
+      <div
+        class="border-t border-[#dedede] py-4 mt-3 px-6 text-sm text-[#444] flex items-center justify-between max-w-[1200px] mx-auto"
+      >
+        <div class="font-semibold">&copy; 2025 64KTPM1</div>
+        <div class="font-semibold">Được thiết kế bởi 64KTPM1/Nhóm 10</div>
+      </div>
+    </footer>
+
+
+    <div id="pay-modal-backdrop" class="fixed inset-0 bg-black bg-opacity-40 z-40 hidden"></div>
+  <div id="pay-modal"
+    class="fixed left-1/2 top-1/2 z-50 -translate-x-1/2 -translate-y-1/2 w-[430px] rounded-xl bg-white shadow-2xl px-0 pt-4 pb-5 hidden">
+    <div id="pay-modal-content"></div>
+  </div>
+
+    <!-- FontAwesome 6 CDN cho icon -->
+  </body>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <script>
+    const rooms = [
+  {
+    name: "Luxury room with city view",
+    img: "../assets/images/twin.jpg",
+    checkin: "4/6/2025",
+    checkout: "6/6/2025",
+    price: 2500000,
+    roomType: "Phòng đôi",
+    service: "Ăn sáng",
+    rating: 5
+  },
+  {
+    name: "Luxury room with city view",
+    img: "../assets/images/delux.jpg",
+    checkin: "4/6/2025",
+    checkout: "6/6/2025",
+    price: 2500000,
+    roomType: "Phòng đôi",
+    service: "Ăn sáng",
+    rating: 5
+  }
+];
+
+function renderRooms() {
+  const list = document.getElementById('room-list');
+  if (!rooms.length) {
+    list.innerHTML = '<div class="text-center text-[#777] text-[20px] py-10">Bạn chưa chọn phòng nào!</div>';
+    document.getElementById('room-total').textContent = '0đ';
+    return;
+  }
+  list.innerHTML = rooms.map((room, i) => `
+    <div class="flex items-start">
+      <img src="${room.img}" class="w-[110px] h-[90px] rounded object-cover mr-5" alt="">
+      <div class="flex-1">
+        <div class="font-bold text-[18px] mb-1">${room.name}</div>
+        <div class="flex flex-wrap gap-x-6 gap-y-1 text-[15px]">
+          <div>Ngày nhận: ${room.checkin}</div>
+          <div>Ngày trả: ${room.checkout}</div>
+        </div>
+        <div class="flex flex-wrap gap-x-5 gap-y-1 mt-1 text-[15px] items-center">
+          <span class="font-bold">Giá: <span class="font-extrabold">${room.price.toLocaleString()}đ / Đêm</span></span>
+          <span>Loại phòng: ${room.roomType}</span>
+          <span class="font-bold ml-3">Đánh giá:
+            ${'<span class="star text-[#F6B01E]">★</span>'.repeat(room.rating)}
+          </span>
+          <span>Dịch vụ: ${room.service}</span>
+        </div>
+      </div>
+      <button data-index="${i}" class="ml-7 px-7 py-2 rounded-full bg-[#e83c4e] hover:bg-[#c82938] text-white text-[16px] font-semibold shadow-sm focus:outline-none transition btn-remove">
+        Xóa
+      </button>
+    </div>
+  `).join('');
+  // Tổng tiền
+  const total = rooms.reduce((sum, r) => sum + r.price, 0);
+  document.getElementById('room-total').textContent = total.toLocaleString() + 'đ';
+  // Gán lại event xoá cho tất cả nút
+  document.querySelectorAll('.btn-remove').forEach(btn => {
+    btn.onclick = function() {
+      const idx = +btn.getAttribute('data-index');
+      rooms.splice(idx, 1);
+      renderRooms();
+    }
+  });
+}
+renderRooms();
+function renderPayTime() {
+  const min = String(Math.floor(paySeconds / 60)).padStart(2, '0');
+  const sec = String(paySeconds % 60).padStart(2, '0');
+  return `<div class="flex items-center justify-center gap-2 mb-1">
+    <div class="flex-1 border-t border-[#222]"></div>
+    <div class="font-bold text-[18px] text-[#181B1C] mx-3" id="pay-timer">${min}:${sec}</div>
+    <div class="flex-1 border-t border-[#222]"></div>
+  </div>`;
+}
+function startPayTimer() {
+  clearInterval(payTimer);
+  paySeconds = 900; // reset 15 phút
+  payTimer = setInterval(() => {
+    paySeconds--;
+    // Update tất cả thẻ #pay-timer (có thể nhiều modal step gọi lại)
+    document.querySelectorAll('#pay-timer').forEach(e=>{
+      const min = String(Math.floor(paySeconds / 60)).padStart(2, '0');
+      const sec = String(paySeconds % 60).padStart(2, '0');
+      e.textContent = `${min}:${sec}`;
+    });
+    if(paySeconds<=0) {
+      clearInterval(payTimer);
+      alert('Đã hết thời gian thanh toán!');
+      closePayModal();
+    }
+  }, 1000);
+}
+
+
+let payTimer = null;    // timer interval
+let paySeconds = 900;   // 15 phút = 900s, đổi giá trị nếu muốn (60*15)
+
+
+// --- MODAL PAY FLOW ---
+let payStep = 1;       // 1: chọn phương thức, 2: nhập thẻ, 3: OTP, 4: QR momo, 5: thành công
+let payMethod = null;  // 'visa', 'vnpay', 'momo'
+
+function showPayModal() {
+  document.getElementById('pay-modal-backdrop').classList.remove('hidden');
+  document.getElementById('pay-modal').classList.remove('hidden');
+  payStep = 1; payMethod = null;
+  startPayTimer();
+  renderPayStep();
+}
+function closePayModal() {
+  document.getElementById('pay-modal-backdrop').classList.add('hidden');
+  document.getElementById('pay-modal').classList.add('hidden');
+}
+
+function renderPayStep(errors={}) {
+  const c = document.getElementById('pay-modal-content');
+  // --- B1: Chọn phương thức ---
+  if(payStep === 1) {
+    c.innerHTML = `
+      <div class="flex items-center justify-between px-6 mb-2">
+        <span class="font-semibold">Chọn phương thức thanh toán</span>
+        <button onclick="closePayModal()" class="w-7 h-7 flex items-center justify-center text-xl hover:bg-gray-200 rounded-full">&times;</button>
+      </div>
+      <div class="px-6 mb-4">
+${renderPayTime()}        
+      </div>
+      <form id="pay-method-form" class="px-6 space-y-3 mb-3">
+        <label class="flex items-center border-2 rounded-lg px-4 py-3 cursor-pointer ${payMethod==='visa'?'border-black':'border-gray-200'}" id="pay-option-visa">
+          <input type="radio" name="pay-method" value="visa" class="hidden" ${payMethod==='visa'?'checked':''}/>
+          <img src="../assets/images/martercardIcon.png" class="w-9 h-7 mr-3" alt="Visa">
+          <span class="font-medium text-[16px]">Thẻ quốc tế (Visa, MasterCard)</span>
+        </label>
+        <label class="flex items-center border-2 rounded-lg px-4 py-3 cursor-pointer ${payMethod==='vnpay'?'border-black':'border-gray-200'}" id="pay-option-vnpay">
+          <input type="radio" name="pay-method" value="vnpay" class="hidden" ${payMethod==='vnpay'?'checked':''}/>
+          <img src="../assets/images/vnpayicon.png" class="w-9 h-7 mr-3" alt="VNPAY">
+          <span class="font-medium text-[16px]">Thẻ ngân hàng nội địa VNPAY</span>
+        </label>
+        <label class="flex items-center border-2 rounded-lg px-4 py-3 cursor-pointer ${payMethod==='momo'?'border-black':'border-gray-200'}" id="pay-option-momo">
+          <input type="radio" name="pay-method" value="momo" class="hidden" ${payMethod==='momo'?'checked':''}/>
+          <img src="../assets/images/momoicon.png" class="w-9 h-7 mr-3" alt="Momo">
+          <span class="font-medium text-[16px]">Ví điện tử Momo</span>
+        </label>
+      </form>
+      <div class="flex items-center px-6 gap-2 mt-4">
+        <button onclick="closePayModal()" class="w-1/2 py-2 rounded-md bg-gray-100 hover:bg-gray-200 text-[#222] font-semibold text-[15px]">Hủy bỏ</button>
+        <button onclick="payChooseMethod()" class="w-1/2 py-2 rounded-md bg-[#222] hover:bg-[#111] text-white font-semibold text-[15px]">Tiếp theo</button>
+      </div>`;
+    // Gắn sự kiện chọn phương thức
+    setTimeout(()=>{
+      document.querySelectorAll('label[id^=pay-option]').forEach(label => {
+        label.onclick = function(e) {
+          payMethod = label.querySelector('input').value;
+          renderPayStep();
+        };
+      });
+    },0);
+    return;
+  }
+
+  // --- B2: Visa/Master hoặc VNPAY ---
+  if((payStep === 2 && (payMethod==='visa'||payMethod==='vnpay'))) {
+    const isVisa = payMethod==='visa';
+    c.innerHTML = `
+      <div class="flex items-center justify-between px-6 mb-2">
+        <span class="font-semibold">
+          ${isVisa?'Thanh toán bằng thẻ quốc tế(Visa, MasterCard)':'Thẻ ngân hàng nội địa (VNPAY)'}
+        </span>
+        <button onclick="closePayModal()" class="w-7 h-7 flex items-center justify-center text-xl hover:bg-gray-200 rounded-full">&times;</button>
+      </div>
+  ${renderPayTime()}   
+  
+      <form id="form-card" class="px-6">
+        <div class="mb-2">
+          <label class="font-medium text-[15px]">Tên chủ thẻ*</label>
+          <input name="name" class="block w-full border rounded-md px-3 py-2 mt-1 text-[16px] ${errors.name?'border-red-400':'border-gray-300'}"/>
+          ${errors.name?'<div class="text-red-500 text-[14px] mt-1">Vui lòng nhập tên chủ thẻ.</div>':''}
+        </div>
+        <div class="mb-2">
+          <label class="font-medium text-[15px]">Số thẻ*</label>
+          <div class="relative flex items-center">
+            <input name="number" maxlength="19" class="block w-full border rounded-md px-3 py-2 mt-1 text-[16px] ${errors.number?'border-red-400':'border-gray-300'} pl-10"/>
+            <img src="${isVisa
+              ?'../assets/images/singlemastercard.png'
+              :'../assets/images/vnpaysingle.png'}" 
+              class="w-7 h-7 absolute left-2 top-2" alt="">
+          </div>
+          ${errors.number?'<div class="text-red-500 text-[14px] mt-1">Vui lòng nhập số thẻ.</div>':''}
+        </div>
+        <div class="flex gap-2 mb-2">
+          <div class="flex-1">
+            <label class="font-medium text-[15px]">Ngày hết hạn*</label>
+            <input name="date" class="block w-full border rounded-md px-3 py-2 mt-1 text-[16px] ${errors.date?'border-red-400':'border-gray-300'}"/>
+            ${errors.date?'<div class="text-red-500 text-[14px] mt-1">Vui lòng nhập ngày hết hạn.</div>':''}
+          </div>
+          ${isVisa?`
+          <div class="w-1/3">
+            <label class="font-medium text-[15px]">CVV</label>
+            <input name="cvv" maxlength="4" type="password" class="block w-full border rounded-md px-3 py-2 mt-1 text-[16px] ${errors.cvv?'border-red-400':'border-gray-300'}"/>
+            ${errors.cvv?'<div class="text-red-500 text-[14px] mt-1">Vui lòng nhập CVV.</div>':''}
+          </div>
+          `:''}
+        </div>
+      </form>
+      <div class="flex items-center px-6 gap-2 mt-4">
+        <button onclick="payStep=1;renderPayStep()" class="w-1/2 py-2 rounded-md bg-gray-100 hover:bg-gray-200 text-[#222] font-semibold text-[15px]">Quay lại</button>
+        <button onclick="payValidateCard()" class="w-1/2 py-2 rounded-md bg-[#222] hover:bg-[#111] text-white font-semibold text-[15px]">Tiếp theo</button>
+      </div>
+    `;
+    return;
+  }
+
+  // --- B3: OTP ---
+  if(payStep === 3 && (payMethod==='visa'||payMethod==='vnpay')) {
+    c.innerHTML = `
+      <div class="flex items-center justify-between px-6 mb-2">
+        <span class="font-semibold">Xác thực giao dịch</span>
+        <button onclick="closePayModal()" class="w-7 h-7 flex items-center justify-center text-xl hover:bg-gray-200 rounded-full">&times;</button>
+      </div>
+${renderPayTime()}      <div class="flex items-center mb-2 px-6">
+      </div>
+      <div class="text-center text-[#222] mb-3">Chúng tôi đã gửi mã OTP xác nhận về SDT 03*****293</div>
+      <div class="flex justify-center gap-3 mb-2">
+        <input maxlength="1" class="text-center w-14 h-14 border-2 rounded-lg text-[32px] font-bold" value="0"/>
+        <input maxlength="1" class="text-center w-14 h-14 border-2 rounded-lg text-[32px] font-bold" value="0"/>
+        <input maxlength="1" class="text-center w-14 h-14 border-2 rounded-lg text-[32px] font-bold" value="0"/>
+        <input maxlength="1" class="text-center w-14 h-14 border-2 rounded-lg text-[32px] font-bold" value="0"/>
+      </div>
+      <div class="text-center mb-3 text-[14px]">Bạn chưa nhận được mã? <a href="#" class="underline">Gửi lại mã</a></div>
+      <div class="flex items-center px-6 gap-2 mt-4">
+        <button onclick="payStep=2;renderPayStep()" class="w-1/2 py-2 rounded-md bg-gray-100 hover:bg-gray-200 text-[#222] font-semibold text-[15px]">Quay lại</button>
+        <button onclick="payStep=5;renderPayStep()" class="w-1/2 py-2 rounded-md bg-[#222] hover:bg-[#111] text-white font-semibold text-[15px]">Xác nhận</button>
+      </div>
+    `;
+    return;
+  }
+
+  // --- B3: MOMO (QR code) ---
+  if(payStep===2 && payMethod==='momo') {
+    c.innerHTML = `
+      <div class="flex items-center justify-between px-6 mb-2">
+        <span class="font-semibold">Thanh toán qua ví điện tử Momo</span>
+        <button onclick="closePayModal()" class="w-7 h-7 flex items-center justify-center text-xl hover:bg-gray-200 rounded-full">&times;</button>
+      </div>
+      ${renderPayTime()}
+   
+      <div class="text-center font-medium text-[17px] mb-2">Quét QR để thanh toán</div>
+      <div class="flex justify-center mb-2">
+        <img src="../assets/images/qrmomo.png"
+          class="w-[180px] h-[180px] bg-white p-3 rounded" alt="qr-momo"/>
+      </div>
+      <div class="flex items-center px-6 gap-2 mt-4">
+        <button onclick="payStep=1;renderPayStep()" class="w-1/2 py-2 rounded-md bg-gray-100 hover:bg-gray-200 text-[#222] font-semibold text-[15px]">Quay lại</button>
+        <button onclick="payStep=5;renderPayStep()" class="w-1/2 py-2 rounded-md bg-[#222] hover:bg-[#111] text-white font-semibold text-[15px]">Xác nhận</button>
+      </div>
+    `;
+    return;
+  }
+
+  // --- B4: Thành công ---
+  if(payStep===5) {
+    c.innerHTML = `
+      <div class="flex items-center justify-between px-6 mb-2">
+        <span></span>
+        <button onclick="closePayModal()" class="w-7 h-7 flex items-center justify-center text-xl hover:bg-gray-200 rounded-full">&times;</button>
+      </div>
+      <div class="flex flex-col items-center justify-center pt-3 pb-1">
+        <div class="bg-green-100 rounded-full p-4 mb-3">
+          <svg width="44" height="44" fill="none" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" fill="#fff" />
+            <circle cx="12" cy="12" r="10" fill="#4ade80" fill-opacity="0.3" />
+            <path d="M8 13.5l2.5 2 5-6" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="font-bold text-[19px] mb-2 text-center">Thanh toán thành công</div>
+        <div class="text-[#444] text-center text-[15px] px-3 mb-5">
+          Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi. Mọi thông tin chi tiết về đơn đặt phòng đã được lưu lại trong đơn đặt phòng của bạn
+        </div>
+        <button onclick="closePayModal()" class="px-10 py-2 rounded-md bg-[#2294fb] text-white text-[17px] font-semibold">OK</button>
+      </div>
+    `;
+    return;
+  }
+}
+
+// Khi chọn phương thức xong
+function payChooseMethod() {
+  if (!payMethod) return alert('Vui lòng chọn phương thức!');
+  payStep = 2;
+  renderPayStep();
+}
+
+// Validate Visa/VNPAY form
+function payValidateCard() {
+  const f = document.getElementById('form-card');
+  const values = Object.fromEntries(new FormData(f).entries());
+  let errors = {};
+  if(!values.name) errors.name = true;
+  if(!values.number) errors.number = true;
+  if(!values.date) errors.date = true;
+  if(payMethod==='visa' && !values.cvv) errors.cvv = true;
+  if(Object.keys(errors).length) return renderPayStep(errors);
+  payStep = 3; renderPayStep();
+}
+
+// Đăng ký hàm global cho HTML inline onclick
+window.showPayModal = showPayModal;
+window.renderPayStep = renderPayStep;
+window.closePayModal = closePayModal;
+window.payChooseMethod = payChooseMethod;
+window.payValidateCard = payValidateCard;
+
+// Gắn nút thanh toán
+document.getElementById('btn-pay').onclick = showPayModal;
+document.getElementById('pay-modal-backdrop').onclick = closePayModal;
+
+        </script>
+        
+    
+  
+</html>
