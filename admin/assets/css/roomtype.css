@@ -1,0 +1,268 @@
+/* Dashboard Specific Styles */
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.content-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-color-dark);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between search, sort, and button */
+}
+
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-box i {
+    position: absolute;
+    left: 15px;
+    color: var(--text-color-light);
+    font-size: 16px;
+}
+
+.search-box input[type="text"] {
+    padding: 10px 15px 10px 40px; /* Left padding for icon */
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 15px;
+    color: var(--text-color-dark);
+    width: 250px;
+    transition: border-color 0.2s ease;
+}
+
+.search-box input[type="text"]::placeholder {
+    color: var(--text-color-light);
+}
+
+.search-box input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.sort-dropdown {
+    display: flex;
+    align-items: center;
+    color: var(--text-color-light);
+    font-size: 15px;
+}
+
+.sort-dropdown span {
+    margin-right: 8px;
+}
+
+.sort-dropdown select {
+    padding: 8px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 15px;
+    color: var(--text-color-dark);
+    appearance: none; /* Remove default dropdown arrow */
+    background-color: var(--surface-color);
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%236c757d" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 20px;
+    cursor: pointer;
+}
+
+.sort-dropdown select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.add-new-btn {
+    background-color: var(--button-blue);
+    color: var(--surface-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.add-new-btn:hover {
+    background-color: var(--button-blue-hover);
+}
+
+/* Table Styling */
+.table-container {
+    background-color: var(--surface-color);
+    border-radius: 10px;
+    overflow-x: auto; /* Ensures table is scrollable on smaller screens */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px; /* Ensure a minimum width to prevent squishing */
+}
+
+table thead {
+    background-color: var(--background-color);
+}
+
+table th,
+table td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 15px;
+    color: var(--text-color-dark);
+}
+
+table th {
+    font-weight: 600;
+    color: var(--text-color-light);
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    position: relative;
+}
+
+table th i.fa-sort-up { /* For sort icons */
+    font-size: 10px;
+    margin-left: 5px;
+    color: var(--primary-color);
+    vertical-align: middle;
+}
+
+table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Tags within table (Tiện nghi) */
+.tag {
+    display: inline-block;
+    background-color: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-right: 5px;
+    margin-bottom: 3px; /* For multiple tags on one line */
+    white-space: nowrap; /* Prevent tags from breaking */
+}
+
+/* Service Tags */
+.service-tag {
+    display: inline-block;
+    background-color: var(--service-tag-bg);
+    color: var(--service-tag-text);
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-right: 5px;
+    margin-bottom: 3px;
+    white-space: nowrap;
+}
+
+/* Action Icon */
+table td i.fa-ellipsis-h {
+    font-size: 18px;
+    color: var(--text-color-light);
+    cursor: pointer;
+    padding: 5px; /* Make it easier to click */
+    border-radius: 50%;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+table td i.fa-ellipsis-h:hover {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
+
+/* Pagination Styling */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.pagination-info {
+    font-size: 14px;
+    color: var(--text-color-light);
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.pagination-controls a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-color-dark);
+    font-size: 15px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.pagination-controls a.page-number {
+    border: 1px solid var(--border-color);
+    background-color: var(--surface-color);
+}
+
+.pagination-controls a.page-number:hover:not(.active) {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
+
+.pagination-controls a.page-number.active {
+    background-color: var(--primary-color);
+    color: var(--surface-color);
+    border-color: var(--primary-color);
+    font-weight: 600;
+}
+
+.pagination-controls .pagination-arrow {
+    border: 1px solid var(--border-color);
+    background-color: var(--surface-color);
+    color: var(--text-color-light);
+}
+
+.pagination-controls .pagination-arrow:hover:not(.disabled) {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
+
+.pagination-controls .pagination-arrow.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-controls .dots {
+    font-size: 15px;
+    color: var(--text-color-light);
+    margin: 0 5px;
+}

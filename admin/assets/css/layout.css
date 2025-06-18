@@ -1,0 +1,234 @@
+/* General Layout Styles */
+:root {
+    --primary-color: #007bff; /* A blue often used for primary actions */
+    --secondary-color: #6c757d; /* Grey for secondary elements */
+    --background-color: #f8f9fa; /* Light grey background */
+    --surface-color: #ffffff; /* White for cards, panels */
+    --text-color-dark: #343a40; /* Dark text for headings */
+    --text-color-light: #6c757d; /* Lighter text for body/secondary */
+    --border-color: #dee2e6; /* Light grey for borders */
+    --sidebar-width: 250px;
+    --navbar-height: 70px;
+    --active-sidebar-bg: #e0f2ff; /* Light blue for active sidebar item */
+    --active-sidebar-text: #007bff;
+    --button-blue: #007bff;
+    --button-blue-hover: #0056b3;
+    --tag-bg: #e9ecef;
+    --tag-text: #495057;
+    --service-tag-bg: #d4edda; /* Light green for success-like tags */
+    --service-tag-text: #155724; /* Dark green */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color-dark);
+    line-height: 1.6;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--surface-color);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+}
+
+.sidebar-header {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.sidebar-header h2 {
+    color: var(--primary-color);
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-nav li {
+    margin-bottom: 5px;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    color: var(--text-color-dark);
+    text-decoration: none;
+    font-size: 15px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-nav a i {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.sidebar-nav a:hover {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
+
+.sidebar-nav li.active a {
+    background-color: var(--active-sidebar-bg);
+    color: var(--active-sidebar-text);
+    border-right: 3px solid var(--active-sidebar-text);
+    font-weight: 500;
+}
+
+.sidebar-nav .section-title {
+    font-size: 13px;
+    color: var(--text-color-light);
+    padding: 15px 20px 5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-footer {
+    margin-top: auto; /* Pushes content to the bottom */
+    padding: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.sidebar-footer-section p {
+    font-size: 13px;
+    color: var(--text-color-light);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 15px;
+}
+
+.sidebar-footer-section a {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    color: var(--text-color-dark);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.sidebar-footer-section a i {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+    border: 1px solid var(--border-color);
+}
+
+.user-info .user-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text-color-dark);
+    margin-bottom: 2px;
+}
+
+.user-info .user-role {
+    font-size: 13px;
+    color: var(--text-color-light);
+}
+
+/* Main Content Styling */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar Styling */
+.navbar {
+    height: var(--navbar-height);
+    background-color: var(--surface-color);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.navbar h1 {
+    font-size: 22px;
+    color: var(--text-color-dark);
+    font-weight: 600;
+}
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+}
+
+.user-actions .user-text {
+    font-size: 15px;
+    color: var(--text-color-light);
+    margin-right: 20px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.user-actions .user-text:hover {
+    color: var(--primary-color);
+}
+
+.user-actions i {
+    font-size: 20px;
+    color: var(--text-color-light);
+    margin-left: 20px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.user-actions i:hover {
+    color: var(--primary-color);
+}
+
+/* Content Section General Styling */
+.content-section {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: var(--background-color);
+}

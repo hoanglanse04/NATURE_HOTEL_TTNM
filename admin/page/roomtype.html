@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý loại phòng - Natural Hotel</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* General Layout & Base Styles */
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+      }
+      .d-flex {
+        width: 100%;
+      }
+
+      /* Sidebar Styles */
+      .sidebar {
+        width: 280px;
+        min-height: 100vh;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+      }
+      .sidebar-header {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        color: #25396f;
+      }
+      .sidebar .nav-link {
+        color: #555;
+        font-weight: 500;
+        padding: 12px 15px;
+        display: flex;
+        align-items: center;
+        border-radius: 8px;
+        margin-bottom: 5px;
+      }
+      .sidebar .nav-link i {
+        width: 20px;
+        margin-right: 15px;
+        text-align: center;
+      }
+      .sidebar .nav-link.active,
+      .sidebar .nav-link:hover {
+        background-color: #eef2ff;
+        color: #435ebe;
+      }
+      .sidebar-footer {
+        margin-top: auto;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+      }
+      .user-profile {
+        display: flex;
+        align-items: center;
+        padding-top: 10px;
+      }
+      .user-profile img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+      .user-profile .mb-0 {
+        font-weight: 600;
+      }
+      .user-profile small {
+        color: #6c757d;
+      }
+
+      /* Main Content Wrapper */
+      .main-wrapper {
+        margin-left: 280px;
+        width: calc(100% - 280px);
+        flex-grow: 1;
+        padding: 30px;
+      }
+      .main-content {
+        flex-grow: 1;
+      }
+
+      /* Page Header */
+      .main-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .main-header h3 {
+        font-size: 22px;
+        font-weight: 600;
+        color: #343a40;
+      }
+      .btn-custom-outline {
+        border: 1px solid #ced4da;
+        color: #495057;
+        padding: 8px 15px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+      }
+      .btn-custom-outline:hover {
+        background-color: #e9ecef;
+        color: #343a40;
+      }
+
+      /* Card Styling */
+      .card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+      .card-header {
+        background-color: #fff;
+        border-bottom: 1px solid #eee;
+        padding: 20px;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .card-header h5 {
+        margin-bottom: 0;
+        font-weight: 600;
+        color: #343a40;
+      }
+      .card-body.p-0 {
+        padding: 0 !important;
+        background: #f6f7fb;
+      }
+      .card-footer {
+        background-color: #fff !important;
+        border-top: 1px solid #eee;
+        padding: 15px 20px;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+      }
+
+      /* Search & Sort controls */
+      .input-group.me-2 {
+        width: 250px;
+      }
+      .input-group-text {
+        background-color: #fff !important;
+        border-right: none;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+      }
+      .form-control[placeholder="Tìm kiếm"] {
+        border-left: none;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        font-size: 15px;
+        padding: 10px 14px;
+        border: 1px solid #ced4da;
+      }
+      .form-control[placeholder="Tìm kiếm"]:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+      }
+      .form-select {
+        border-radius: 8px;
+        font-size: 15px;
+        padding: 10px 14px;
+        border: 1px solid #ced4da;
+        background-color: #fff;
+        color: #495057;
+        appearance: none;
+        background-image: url('data:image/svg+xml;utf8,<svg fill="%236c757d" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 20px;
+      }
+      .form-select:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+      }
+      .btn-primary {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        padding: 10px 20px;
+        font-weight: 500;
+        border-radius: 8px;
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+      }
+      .btn-primary:hover {
+        background-color: #0b5ed7;
+        border-color: #0a58ca;
+      }
+
+      /* Table Styles */
+      .table-card {
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 2px 12px rgba(67, 94, 190, 0.07);
+        padding: 0;
+        overflow: hidden;
+        margin-top: 20px;
+      }
+      .table-responsive {
+        margin-bottom: 0;
+      }
+      .custom-table {
+        margin-bottom: 0;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        min-width: 900px;
+      }
+      .custom-table th,
+      .custom-table td {
+        vertical-align: middle;
+        border: none;
+        background: transparent;
+        font-size: 15px;
+        color: #222;
+        padding: 13px 12px;
+        white-space: nowrap;
+      }
+      .custom-table th {
+        background: #fafbfc;
+        font-weight: 600;
+        color: #222;
+        border-bottom: 1px solid #f0f1f7;
+        font-size: 15px;
+      }
+      .custom-table th .fa-sort {
+        margin-left: 5px;
+        font-size: 12px;
+        color: #b0b3c6;
+        cursor: pointer;
+      }
+      .custom-table tr {
+        border-bottom: 1px solid #f0f1f7;
+        transition: background 0.15s;
+      }
+      .custom-table tr:last-child {
+        border-bottom: none;
+      }
+      .custom-table tbody tr:hover {
+        background: #f4f6fb;
+      }
+
+      /* Badges for Amenities and Services */
+      .badge-amenity {
+        background: #eef2ff;
+        color: #435ebe;
+        font-size: 13px;
+        font-weight: 500;
+        border-radius: 6px;
+        padding: 4px 12px;
+        margin-right: 4px;
+        margin-bottom: 2px;
+        display: inline-block;
+        box-shadow: 0 1px 2px rgba(67, 94, 190, 0.03);
+      }
+
+      /* Action icon in table */
+      .table-action {
+        text-align: center;
+        font-size: 20px;
+        color: #b0b3c6;
+        cursor: pointer;
+        transition: color 0.2s, background 0.2s;
+        border-radius: 50%;
+        padding: 6px 10px;
+        display: inline-block;
+      }
+      .table-action:hover {
+        color: #435ebe;
+        background: #eef2ff;
+      }
+
+      /* Pagination */
+      .pagination .page-item .page-link {
+        color: #495057;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        margin: 0 2px;
+        min-width: 38px;
+        text-align: center;
+      }
+      .pagination .page-item.active .page-link {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        color: white;
+      }
+      .pagination .page-item .page-link:hover {
+        background-color: #e9ecef;
+        color: #0d6efd;
+        border-color: #ced4da;
+      }
+      .pagination .page-item.disabled .page-link {
+        background-color: #fff;
+        border-color: #dee2e6;
+        color: #6c757d;
+        cursor: not-allowed;
+      }
+      .pagination .page-item:first-child .page-link,
+      .pagination .page-item:last-child .page-link {
+        border-radius: 8px;
+      }
+
+      /* Modal Overlay */
+      .page-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(67, 94, 190, 0.08);
+        z-index: 1040;
+        display: none;
+      }
+
+      /* Add Room Type Modal */
+      .add-roomtype-modal {
+        border-radius: 18px;
+        box-shadow: 0 8px 40px rgba(67, 94, 190, 0.13);
+        border: none;
+        background: #fff;
+        animation: modalFadeIn 0.25s;
+      }
+      @keyframes modalFadeIn {
+        from {
+          transform: translateY(40px) scale(0.98);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+      }
+      .add-roomtype-modal .modal-header {
+        padding: 32px 36px 0 36px;
+        border-bottom: none;
+        background: #fff;
+      }
+      .add-roomtype-modal .modal-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #222;
+      }
+      .add-roomtype-modal .btn-close {
+        font-size: 1.2rem;
+        background: none;
+        border: none;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+      }
+      .add-roomtype-modal .btn-close:hover {
+        opacity: 1;
+      }
+      .add-roomtype-modal .modal-body {
+        padding: 28px 36px 0 36px;
+        background: #fff;
+      }
+      .add-roomtype-modal .modal-footer {
+        padding: 28px 36px 36px 36px;
+        border-top: none;
+        background: #fff;
+        gap: 16px;
+        display: flex;
+        flex-direction: row;
+      }
+      .add-roomtype-modal .btn-confirm,
+      .add-roomtype-modal .btn-light {
+        min-width: 0;
+        width: 100%;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 15px;
+        padding: 12px 0;
+      }
+      .add-roomtype-modal .btn-confirm {
+        background: linear-gradient(90deg, #7c3aed 60%, #435ebe 100%);
+        color: #fff;
+        border: none;
+        box-shadow: 0 2px 8px rgba(67, 94, 190, 0.08);
+        transition: background 0.2s;
+      }
+      .add-roomtype-modal .btn-confirm:hover {
+        background: linear-gradient(90deg, #5b21b6 60%, #25396f 100%);
+      }
+      .add-roomtype-modal .btn-light {
+        border: 1.5px solid #e5e7eb;
+        color: #222;
+        background-color: #fff;
+        transition: background-color 0.2s, border 0.2s;
+      }
+      .add-roomtype-modal .btn-light:hover {
+        background-color: #f4f6fb;
+        border: 1.5px solid #435ebe;
+      }
+      .add-roomtype-modal .form-label {
+        font-size: 15px;
+        color: #222;
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+      .add-roomtype-modal .form-control,
+      .add-roomtype-modal .form-select {
+        border-radius: 8px;
+        font-size: 15px;
+        padding: 10px 14px;
+        border: 1px solid #e5e7eb;
+        background: #fafbfc;
+        color: #222;
+      }
+      .add-roomtype-modal .form-control:focus,
+      .add-roomtype-modal .form-select:focus {
+        border-color: #7c3aed;
+        box-shadow: 0 0 0 2px #ede9fe;
+        background: #fff;
+      }
+      .add-roomtype-modal .badge-select {
+        background: #eef2ff;
+        color: #435ebe;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 6px;
+        padding: 6px 16px;
+        display: inline-block;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+      .add-roomtype-modal .badge-select:hover {
+        background-color: #d8e5f7;
+      }
+      .add-roomtype-modal .mb-3 .d-flex.flex-wrap.gap-2 {
+        margin-bottom: 12px !important;
+      }
+
+      /* Success and Delete Modals */
+      #successModal .modal-content,
+      #deleteModal .modal-content {
+        border-radius: 16px;
+        border: none;
+        box-shadow: 0 4px 24px rgba(67, 94, 190, 0.10);
+        padding: 20px;
+      }
+      #successModal .modal-body,
+      #deleteModal .modal-body {
+        padding: 30px 20px;
+      }
+      #successModal .fa-check-circle {
+        font-size: 54px;
+        color: #22c55e;
+        margin-bottom: 18px;
+      }
+      #successModal h5 {
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 10px;
+      }
+      #successModal p {
+        color: #6c757d;
+        font-size: 15px;
+      }
+      #successModal .btn-primary {
+        margin-top: 15px;
+        padding: 10px 24px;
+        border-radius: 10px;
+        font-weight: 600;
+      }
+      #deleteModal .fa-trash-alt {
+        font-size: 44px;
+        color: #ef4444;
+        margin-bottom: 18px;
+      }
+      #deleteModal h5 {
+        font-weight: 700;
+        color: #222;
+        margin-bottom: 10px;
+      }
+      #deleteModal p {
+        color: #6c757d;
+        font-size: 15px;
+      }
+      #deleteModal .btn-danger {
+        background: #ef4444;
+        border: none;
+        font-weight: 600;
+        border-radius: 10px;
+        padding: 10px 24px;
+      }
+      #deleteModal .btn-danger:hover {
+        background: #c82333;
+      }
+      #deleteModal .btn-secondary {
+        border-radius: 10px;
+        padding: 10px 24px;
+        font-weight: 600;
+      }
+      #deleteModal .modal-body .btn {
+        width: auto;
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 992px) {
+        .main-wrapper {
+          margin-left: 0;
+          width: 100%;
+          padding: 15px;
+        }
+        .sidebar {
+          position: relative;
+          width: 100%;
+          min-height: auto;
+          box-shadow: none;
+          border-right: none;
+          border-bottom: 1px solid #eee;
+          padding: 15px;
+        }
+        .sidebar-header {
+          margin-bottom: 15px;
+        }
+        .sidebar-footer {
+          margin-top: 15px;
+          padding-top: 15px;
+        }
+        .main-header {
+          flex-direction: column;
+          align-items: flex-start;
+          margin-bottom: 15px;
+        }
+        .main-header h3 {
+          margin-bottom: 10px;
+          font-size: 20px;
+        }
+        .card-header {
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 15px;
+        }
+        .card-header h5 {
+          margin-bottom: 15px;
+        }
+        .card-header .d-flex.align-items-center {
+          flex-direction: column;
+          width: 100%;
+          align-items: stretch !important;
+        }
+        .input-group.me-2 {
+          width: 100% !important;
+          margin-bottom: 10px !important;
+        }
+        .form-select,
+        .btn-primary {
+          width: 100% !important;
+          margin-bottom: 10px;
+        }
+        .table-responsive {
+          overflow-x: auto;
+        }
+        .custom-table {
+          min-width: 700px;
+        }
+      }
+      @media (max-width: 768px) {
+        .add-roomtype-modal .modal-body,
+        .add-roomtype-modal .modal-header,
+        .add-roomtype-modal .modal-footer {
+          padding: 20px !important;
+        }
+        .add-roomtype-modal .btn-confirm,
+        .add-roomtype-modal .btn-light {
+          padding: 10px 10px;
+          font-size: 14px;
+        }
+        .custom-table {
+          min-width: 600px;
+        }
+      }
+      @media (max-width: 576px) {
+        .custom-table {
+          min-width: 500px;
+        }
+        .modal-dialog.modal-lg {
+          max-width: 95%;
+        }
+        .add-roomtype-modal {
+          min-width: unset;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-overlay" id="page-overlay"></div>
+
+    <div class="d-flex w-100">
+      <nav class="sidebar">
+        <h4 class="sidebar-header">Natural Hotel</h4>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="./dashboard.html"><i class="fas fa-chart-line"></i> Thống kê</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./room.html"><i class="fas fa-bed"></i> Quản lý phòng</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="./roomtype.html"><i class="fas fa-tags"></i> Quản lý loại phòng</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-users"></i> Quản lý tài khoản</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-concierge-bell"></i> Quản lý dịch vụ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-file-alt"></i> Quản lý tài nguyên</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./QuanLyTienNghi.html"><i class="fas fa-couch"></i> Quản lý tiện nghi</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-newspaper"></i> Quản lý bài viết</a>
+          </li>
+        </ul>
+        <hr />
+        <p class="text-muted small">Hỗ trợ</p>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-cog"></i> Cài đặt</a>
+          </li>
+        </ul>
+        <div class="sidebar-footer">
+          <div class="user-profile">
+            <img src="https://i.pravatar.cc/40?u=admin" alt="Admin avatar" />
+            <div>
+              <h6 class="mb-0">Admin</h6>
+              <small class="text-muted">Project Manager</small>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="main-wrapper">
+        <div class="main-content">
+          <header class="main-header">
+            <h3>Quản lý loại phòng</h3>
+            <div>
+              <button class="btn btn-custom-outline" aria-label="Tải về dữ liệu">
+                <i class="fas fa-download me-2"></i> Tải về
+              </button>
+            </div>
+          </header>
+          <div class="card">
+            <div class="card-header">
+              <div class="d-flex justify-content-between align-items-center w-100">
+                <h5 class="mb-0">Danh sách loại phòng</h5>
+                <div class="d-flex align-items-center flex-wrap justify-content-end">
+                  <div class="input-group me-2" style="width: 250px">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    <input type="text" class="form-control" placeholder="Tìm kiếm" aria-label="Tìm kiếm loại phòng" />
+                  </div>
+                  <select class="form-select me-2" style="width: 150px" aria-label="Sắp xếp danh sách">
+                    <option selected>Sắp xếp: Mới nhất</option>
+                    <option value="1">Cũ nhất</option>
+                    <option value="2">Tên A-Z</option>
+                  </select>
+                  <button
+                    class="btn btn-primary text-nowrap"
+                    data-bs-toggle="modal"
+                    data-bs-target="#addRoomTypeModal"
+                    aria-label="Thêm loại phòng mới"
+                  >
+                    <i class="fas fa-plus me-2"></i>Thêm Mới
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <div class="d-flex align-items-center px-4 pt-3">
+                <label for="show-entries" class="form-label me-2 text-nowrap">Hiển thị</label>
+                <select id="show-entries" class="form-select" style="width: 80px" aria-label="Số lượng dữ liệu hiển thị">
+                  <option selected>10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                </select>
+                <span class="ms-2 text-muted">dữ liệu</span>
+              </div>
+              <div class="table-card mt-2">
+                <div class="table-responsive">
+                  <table class="table custom-table align-middle">
+                    <thead>
+                      <tr>
+                        <th>Mã Loại phòng <i class="fas fa-sort"></i></th>
+                        <th>Tên loại phòng <i class="fas fa-sort"></i></th>
+                        <th>Giá cơ bản</th>
+                        <th>Tiện nghi</th>
+                        <th>Người lớn <i class="fas fa-sort"></i></th>
+                        <th>Trẻ em</th>
+                        <th>Dịch vụ</th>
+                        <th>Hành động</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr data-id="1">
+                        <td>ABC123</td>
+                        <td>Phòng Đơn</td>
+                        <td>2500000đ</td>
+                        <td>
+                          <span class="badge-amenity">Wifi</span>
+                          <span class="badge-amenity">TV</span>
+                          <span class="badge-amenity">Điều hòa</span>
+                          <span class="badge-amenity">Két an toàn</span>
+                        </td>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>
+                          <span class="badge-amenity">Ăn sáng</span>
+                          <span class="badge-amenity">Giặt là</span>
+                        </td>
+                        <td>
+                          <span class="table-action" aria-label="Hành động"><i class="fas fa-ellipsis-h"></i></span>
+                        </td>
+                      </tr>
+                      <tr data-id="2">
+                        <td>ABC124</td>
+                        <td>Phòng Đôi</td>
+                        <td>3000000đ</td>
+                        <td>
+                          <span class="badge-amenity">Wifi</span>
+                          <span class="badge-amenity">TV</span>
+                          <span class="badge-amenity">Điều hòa</span>
+                          <span class="badge-amenity">Két an toàn</span>
+                        </td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>
+                          <span class="badge-istr>Ăn sáng</span>
+                          <span class="badge-amenity">Giặt là</span>
+                        </td>
+                        <td>
+                          <span class="table-action" aria-label="Hành động"><i class="fas fa-ellipsis-h"></i></span>
+                        </td>
+                      </tr>
+                      <tr data-id="3">
+                        <td>ABC125</td>
+                        <td>Phòng Delux</td>
+                        <td>3500000đ</td>
+                        <td>
+                          <span class="badge-amenity">Wifi</span>
+                          <span class="badge-amenity">TV</span>
+                          <span class="badge-amenity">Điều hòa</span>
+                          <span class="badge-amenity">Két an toàn</span>
+                        </td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>
+                          <span class="badge-amenity">Ăn sáng</span>
+                          <span class="badge-amenity">Giặt là</span>
+                        </td>
+                        <td>
+                          <span class="table-action" aria-label="Hành động"><i class="fas fa-ellipsis-h"></i></span>
+                        </td>
+                      </tr>
+                      <tr data-id="4">
+                        <td>ABC126</td>
+                        <td>Phòng Family</td>
+                        <td>4000000đ</td>
+                        <td>
+                          <span class="badge-amenity">Wifi</span>
+                          <span class="badge-amenity">TV</span>
+                          <span class="badge-amenity">Điều hòa</span>
+                          <span class="badge-amenity">Két an toàn</span>
+                        </td>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>
+                          <span class="badge-amenity">Ăn sáng</span>
+                          <span class="badge-amenity">Giặt là</span>
+                        </td>
+                        <td>
+                          <span class="table-action" aria-label="Hành động"><i class="fas fa-ellipsis-h"></i></span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer bg-white">
+              <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-end mb-0">
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">&lt;</a>
+                  </li>
+                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item disabled"><span class="page-link">...</span></li>
+                  <li class="page-item"><a class="page-link" href="#">40</a></li>
+                  <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="addRoomTypeModal" tabindex="-1" aria-labelledby="addRoomTypeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content add-roomtype-modal">
+            <div class="modal-header">
+              <h5 class="modal-title fw-bold" id="addRoomTypeModalLabel">Thêm loại phòng</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="addRoomTypeForm">
+              <div class="modal-body">
+                <div class="mb-3">
+                  <label class="form-label fw-medium">Mã loại phòng*</label>
+                  <input type="text" class="form-control" placeholder="Nhập mã loại phòng" required aria-label="Mã loại phòng" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label fw-medium">Tên loại phòng*</label>
+                  <input type="text" class="form-control" placeholder="Nhập tên loại phòng" required aria-label="Tên loại phòng" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label fw-medium">Giá cơ bản*</label>
+                  <input type="number" class="form-control" placeholder="Nhập giá cơ bản" min="1" required aria-label="Giá cơ bản" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label fw-medium">Tiện nghi</label>
+                  <div id="amenity-badges" class="d-flex flex-wrap gap-2 mb-2">
+                    <span class="badge badge-select">TV</span>
+                    <span class="badge badge-select">Tủ lạnh</span>
+                  </div>
+                  <select id="amenity-select" class="form-select" aria-label="Chọn tiện nghi">
+                    <option value="">Chọn tiện nghi...</option>
+                    <option>TV</option>
+                    <option>Tủ lạnh</option>
+                    <option>Wifi</option>
+                    <option>Điều hòa</option>
+                    <option>Két an toàn</option>
+                  </select>
+                </div>
+                <div class="row mb-3">
+                  <div class="col">
+                    <label class="form-label fw-medium">Người lớn*</label>
+                    <input type="number" class="form-control" placeholder="Số người lớn" value="1" min="1" required aria-label="Số người lớn" />
+                  </div>
+                  <div class="col">
+                    <label class="form-label fw-medium">Trẻ em*</label>
+                    <input type="number" class="form-control" placeholder="Số trẻ em" value="0" min="0" required aria-label="Số trẻ em" />
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label fw-medium">Dịch vụ</label>
+                  <div id="service-badges" class="d-flex flex-wrap gap-2 mb-2">
+                    <span class="badge badge-select">Ăn sáng</span>
+                    <span class="badge badge-select">Giặt là</span>
+                  </div>
+                  <select id="service-select" class="form-select" aria-label="Chọn dịch vụ">
+                    <option value="">Chọn dịch vụ...</option>
+                    <option>Ăn sáng</option>
+                    <option>Giặt là</option>
+                    <option>Đưa đón sân bay</option>
+                  </select>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-light flex-fill" data-bs-dismiss="modal">Hủy</button>
+                <button type="submit" class="btn btn-confirm flex-fill">Xác nhận</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+          <div class="modal-content">
+            <div class="modal-body text-center py-4">
+              <i class="fas fa-check-circle mb-3"></i>
+              <h5 id="successModalTitle">Thành công!</h5>
+              <p id="successModalMessage">Thao tác của bạn đã được thực hiện thành công.</p>
+              <button type="button" class="btn btn-primary mt-2" data-bs-dismiss="modal">Đóng</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+          <div class="modal-content">
+            <div class="modal-body text-center py-4">
+              <i class="fas fa-trash-alt text-danger mb-3"></i>
+              <h5>Bạn có chắc chắn muốn xóa?</h5>
+              <p class="text-muted mb-4">Bạn sẽ không thể khôi phục lại dữ liệu này!</p>
+              <button type="button" class="btn btn-danger me-2" id="confirmDeleteBtn">Xóa</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          // Modal instances
+          const addRoomTypeModalElement = document.getElementById('addRoomTypeModal');
+          const addRoomTypeModal = new bootstrap.Modal(addRoomTypeModalElement);
+          const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+          const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+          const pageOverlay = document.getElementById('page-overlay');
+
+          // Success modal content references
+          const successModalTitle = document.getElementById('successModalTitle');
+          const successModalMessage = document.getElementById('successModalMessage');
+
+          // Function to show success modal with custom message
+          function showSuccessModal(title, message) {
+            successModalTitle.textContent = title;
+            successModalMessage.textContent = message;
+            pageOverlay.style.display = 'block';
+            setTimeout(() => {
+              successModal.show();
+              pageOverlay.style.display = 'none';
+            }, 300);
+          }
+
+          // Badge management for amenities and services
+          const amenitySelect = document.getElementById('amenity-select');
+          const amenityBadgesContainer = document.getElementById('amenity-badges');
+          let selectedAmenities = [];
+
+          const serviceSelect = document.getElementById('service-select');
+          const serviceBadgesContainer = document.getElementById('service-badges');
+          let selectedServices = [];
+
+          // Function to render badges
+          function renderBadges(container, itemsArray) {
+            container.innerHTML = '';
+            itemsArray.forEach(item => {
+              const badge = document.createElement('span');
+              badge.className = 'badge badge-select me-2 mb-1';
+              badge.style.cursor = 'pointer';
+              badge.setAttribute('aria-label', `Xóa ${item}`);
+              badge.title = 'Nhấn để xóa';
+              badge.textContent = item;
+              badge.addEventListener('click', function () {
+                const index = itemsArray.indexOf(item);
+                if (index > -1) {
+                  itemsArray.splice(index, 1);
+                  renderBadges(container, itemsArray);
+                }
+              });
+              container.appendChild(badge);
+            });
+          }
+
+          // Initialize badges from HTML
+          function initializeBadges(container, itemsArray, selector) {
+            document.querySelectorAll(selector).forEach(badge => {
+              const value = badge.textContent.trim();
+              if (!itemsArray.includes(value)) {
+                itemsArray.push(value);
+              }
+              badge.addEventListener('click', function () {
+                const index = itemsArray.indexOf(value);
+                if (index > -1) {
+                  itemsArray.splice(index, 1);
+                  renderBadges(container, itemsArray);
+                }
+              });
+            });
+            renderBadges(container, itemsArray);
+          }
+
+          initializeBadges(amenityBadgesContainer, selectedAmenities, '#amenity-badges .badge-select');
+          initializeBadges(serviceBadgesContainer, selectedServices, '#service-badges .badge-select');
+
+          // Add item from dropdown with duplicate check
+          function addItem(selectElement, itemsArray, container) {
+            selectElement.addEventListener('change', function () {
+              const value = this.value.trim();
+              if (value && !itemsArray.includes(value)) {
+                itemsArray.push(value);
+                renderBadges(container, itemsArray);
+              } else if (value) {
+                alert('Tiện nghi hoặc dịch vụ này đã được chọn!');
+              }
+              this.value = '';
+            });
+          }
+
+          addItem(amenitySelect, selectedAmenities, amenityBadgesContainer);
+          addItem(serviceSelect, selectedServices, serviceBadgesContainer);
+
+          // Table reference
+          const tableBody = document.querySelector('.custom-table tbody');
+          let rowIdCounter = document.querySelectorAll('.custom-table tbody tr').length + 1; // Track row IDs
+
+          // Function to add a new row to the table
+          function addTableRow(data) {
+            const row = document.createElement('tr');
+            row.setAttribute('data-id', rowIdCounter++);
+            row.innerHTML = `
+              <td>${data.code}</td>
+              <td>${data.name}</td>
+              <td>${data.price}đ</td>
+              <td>${data.amenities.map(item => `<span class="badge-amenity">${item}</span>`).join(' ')}</td>
+              <td>${data.adults}</td>
+              <td>${data.children}</td>
+              <td>${data.services.map(item => `<span class="badge-amenity">${item}</span>`).join(' ')}</td>
+              <td><span class="table-action" aria-label="Hành động"><i class="fas fa-ellipsis-h"></i></span></td>
+            `;
+            row.querySelector('.table-action').addEventListener('click', function () {
+              currentRow = row; // Store the row to delete
+              deleteModal.show();
+            });
+            tableBody.appendChild(row);
+          }
+
+          // Handle form submission
+          const addRoomTypeForm = document.getElementById('addRoomTypeForm');
+          addRoomTypeForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Collect form data
+            const roomTypeCode = addRoomTypeForm.querySelector('input[placeholder="Nhập mã loại phòng"]').value.trim();
+            const roomTypeName = addRoomTypeForm.querySelector('input[placeholder="Nhập tên loại phòng"]').value.trim();
+            const basePrice = parseFloat(addRoomTypeForm.querySelector('input[placeholder="Nhập giá cơ bản"]').value);
+            const adults = parseInt(addRoomTypeForm.querySelector('input[placeholder="Số người lớn"]').value);
+            const children = parseInt(addRoomTypeForm.querySelector('input[placeholder="Số trẻ em"]').value);
+
+            // Validate form
+            if (!roomTypeCode || !roomTypeName || isNaN(basePrice) || basePrice <= 0) {
+              alert('Vui lòng điền đầy đủ và hợp lệ các trường bắt buộc (Mã loại phòng, Tên loại phòng, Giá cơ bản).');
+              return;
+            }
+            if (selectedAmenities.length === 0) {
+              alert('Vui lòng chọn ít nhất một tiện nghi.');
+              return;
+            }
+            if (selectedServices.length === 0) {
+              alert('Vui lòng chọn ít nhất một dịch vụ.');
+              return;
+            }
+
+            // Format price
+            const formattedPrice = basePrice.toLocaleString('vi-VN');
+
+            // Create new room type object
+            const newRoomType = {
+              code: roomTypeCode,
+              name: roomTypeName,
+              price: formattedPrice,
+              amenities: [...selectedAmenities],
+              adults: adults,
+              children: children,
+              services: [...selectedServices],
+            };
+
+            // Add to table and show success
+            addTableRow(newRoomType);
+            addRoomTypeModal.hide();
+            showSuccessModal('Thêm thành công!', `Loại phòng "${roomTypeName}" đã được thêm vào hệ thống.`);
+
+            // Reset form
+            addRoomTypeForm.reset();
+            selectedAmenities = [];
+            selectedServices = [];
+            renderBadges(amenityBadgesContainer, selectedAmenities);
+            renderBadges(serviceBadgesContainer, selectedServices);
+          });
+
+          // Track current row for deletion
+          let currentRow = null;
+
+          // Initialize delete actions for existing rows
+          document.querySelectorAll('.table-action').forEach(actionButton => {
+            actionButton.addEventListener('click', function () {
+              currentRow = actionButton.closest('tr');
+              deleteModal.show();
+            });
+          });
+
+          // Handle deletion
+          const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+          confirmDeleteBtn.addEventListener('click', function () {
+            if (currentRow) {
+              const roomName = currentRow.querySelector('td:nth-child(2)').textContent;
+              currentRow.remove();
+              deleteModal.hide();
+              showSuccessModal('Xóa thành công!', `Loại phòng "${roomName}" đã được xóa khỏi hệ thống.`);
+              currentRow = null;
+            }
+          });
+
+          // Overlay handling for all modals
+          [addRoomTypeModalElement, successModal._element, deleteModal._element].forEach(modal => {
+            modal.addEventListener('show.bs.modal', () => {
+              pageOverlay.style.display = 'block';
+            });
+            modal.addEventListener('hide.bs.modal', () => {
+              pageOverlay.style.display = 'none';
+            });
+          });
+        });
+      </script>
+    </body>
+</html>

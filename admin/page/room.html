@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{title}}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+      }
+      .d-flex {
+        width: 100%;
+      }
+
+      /* Sidebar Styles */
+      .sidebar {
+        width: 280px;
+        min-height: 100vh;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+      }
+      .sidebar-header {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        color: #25396f;
+      }
+      .sidebar .nav-link {
+        color: #555;
+        font-weight: 500;
+        padding: 12px 15px;
+        display: flex;
+        align-items: center;
+        border-radius: 8px;
+        margin-bottom: 5px;
+      }
+      .sidebar .nav-link i {
+        width: 20px;
+        margin-right: 15px;
+        text-align: center;
+      }
+      .sidebar .nav-link.active,
+      .sidebar .nav-link:hover {
+        background-color: #eef2ff;
+        color: #435ebe;
+      }
+      .sidebar-footer {
+        margin-top: auto;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+      }
+      .user-profile {
+        display: flex;
+        align-items: center;
+        padding-top: 10px;
+      }
+      .user-profile img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+      .user-profile .mb-0 {
+        font-weight: 600;
+      }
+      .user-profile small {
+        color: #6c757d;
+      }
+
+      /* Main Content Wrapper */
+      .main-wrapper {
+        margin-left: 280px;
+        width: calc(100% - 280px);
+        flex-grow: 1;
+        padding: 30px;
+      }
+      .main-content {
+        flex-grow: 1;
+      }
+
+      /* Page Header */
+      .main-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .main-header h3 {
+        font-size: 22px;
+        font-weight: 600;
+        color: #343a40;
+      }
+      .btn-custom-outline {
+        border: 1px solid #ced4da;
+        color: #495057;
+        padding: 8px 15px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+      }
+      .btn-custom-outline:hover {
+        background-color: #e9ecef;
+        color: #343a40;
+      }
+
+      /* Card Styling */
+      .card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      }
+      .card-header {
+        background-color: #fff;
+        border-bottom: 1px solid #eee;
+        padding: 20px;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .card-header h5 {
+        margin-bottom: 0;
+        font-weight: 600;
+        color: #343a40;
+      }
+      .card-body.p-0 {
+        padding: 0 !important;
+        background: #f6f7fb;
+      }
+      .card-footer {
+        background-color: #fff !important;
+        border-top: 1px solid #eee;
+        padding: 15px 20px;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+      }
+
+      /* Search & Sort controls */
+      .input-group.me-2 {
+        width: 250px;
+      }
+      .input-group-text {
+        background-color: #fff !important;
+        border-right: none;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+      }
+      .form-control[placeholder="Tìm kiếm"] {
+        border-left: none;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        font-size: 15px;
+        padding: 10px 14px;
+        border: 1px solid #ced4da;
+      }
+      .form-control[placeholder="Tìm kiếm"]:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+      }
+      .form-select {
+        border-radius: 8px;
+        font-size: 15px;
+        padding: 10px 14px;
+        border: 1px solid #ced4da;
+        background-color: #fff;
+        color: #495057;
+        appearance: none;
+        background-image: url('data:image/svg+xml;utf8,<svg fill="%236c757d" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 20px;
+      }
+      .form-select:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+      }
+      .btn-primary {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        padding: 10px 20px;
+        font-weight: 500;
+        border-radius: 8px;
+        transition: background-color 0.2s ease, border-color 0.2s ease;
+      }
+      .btn-primary:hover {
+        background-color: #0b5ed7;
+        border-color: #0a58ca;
+      }
+
+      /* Grid Layout for Apartments */
+      .apartment-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 cột */
+        grid-template-rows: repeat(2, auto); /* 2 hàng */
+        gap: 20px;
+        padding: 20px 0;
+      }
+      .apartment-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        position: relative;
+      }
+      .apartment-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+      .apartment-card .card-content {
+        padding: 10px;
+      }
+      .apartment-card .title {
+        font-size: 16px;
+        font-weight: 500;
+        color: #343a40;
+        margin-bottom: 5px;
+      }
+      .apartment-card .location {
+        font-size: 14px;
+        color: #6c757d;
+        margin-bottom: 10px;
+      }
+      .apartment-card .status {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border-top: 1px solid #eee;
+      }
+      .apartment-card .status .details {
+        font-size: 14px;
+        color: #495057;
+      }
+      .apartment-card .status .details span {
+        font-size: 20px; /* Tăng kích thước biểu tượng */
+        margin: 0 2px; /* Khoảng cách giữa các biểu tượng */
+      }
+      .apartment-card .status .indicator {
+        width: 20px; /* Tăng kích thước chấm trạng thái */
+        height: 20px; /* Tăng kích thước chấm trạng thái */
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .apartment-card .status .red { background-color: #dc3545; }
+      .apartment-card .status .green { background-color: #28a745; }
+      .apartment-card .status .yellow { background-color: #ffc107; }
+      .apartment-card .status .blue { background-color: #007bff; }
+
+      /* Pagination */
+      .pagination .page-item .page-link {
+        color: #495057;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        margin: 0 2px;
+        min-width: 38px;
+        text-align: center;
+      }
+      .pagination .page-item.active .page-link {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        color: white;
+      }
+      .pagination .page-item .page-link:hover {
+        background-color: #e9ecef;
+        color: #0d6efd;
+        border-color: #ced4da;
+      }
+      .pagination .page-item.disabled .page-link {
+        background-color: #fff;
+        border-color: #dee2e6;
+        color: #6c757d;
+        cursor: not-allowed;
+      }
+      .pagination .page-item:first-child .page-link,
+      .pagination .page-item:last-child .page-link {
+        border-radius: 8px;
+      }
+
+      /* Modal Overlay */
+      .page-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(67, 94, 190, 0.08);
+        z-index: 1040;
+        display: none;
+      }
+
+      /* Add Room Type Modal */
+      .add-roomtype-modal {
+        border-radius: 18px;
+        box-shadow: 0 8px 40px rgba(67, 94, 190, 0.13);
+        border: none;
+        background: #fff;
+        animation: modalFadeIn 0.25s;
+      }
+      @keyframes modalFadeIn {
+        from {
+          transform: translateY(40px) scale(0.98);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+      }
+    </style>
+</head>
+<body>
+  <div class="d-flex">
+    <nav class="sidebar">
+      <h4 class="sidebar-header">Natural Hotel</h4>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="./dashboard.html"><i class="fas fa-chart-line"></i> Thống kê</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="./room.html"><i class="fas fa-bed"></i> Quản lý phòng</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./roomtype.html"><i class="fas fa-tags"></i> Quản lý loại phòng</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fas fa-users"></i> Quản lý tài khoản</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fas fa-concierge-bell"></i> Quản lý dịch vụ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fas fa-file-alt"></i> Quản lý tài nguyên</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./QuanLyTienNghi.html"><i class="fas fa-couch"></i> Quản lý tiện nghi</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fas fa-newspaper"></i> Quản lý bài viết</a>
+        </li>
+      </ul>
+      <hr />
+      <p class="text-muted small">Hỗ trợ</p>
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fas fa-cog"></i> Cài đặt</a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <img src="https://i.pravatar.cc/40?u=admin" alt="Admin avatar" />
+          <div>
+            <h6 class="mb-0">Admin</h6>
+            <small class="text-muted">Project Manager</small>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="main-wrapper">
+      <div class="main-content">
+        <header class="main-header">
+          <h3>Quản lý loại phòng</h3>
+          <div>
+            <button class="btn btn-custom-outline" aria-label="Tải về dữ liệu">
+              <i class="fas fa-download me-2"></i> Tải về
+            </button>
+          </div>
+        </header>
+        <div class="card">
+          <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center w-100">
+              <h5 class="mb-0">Danh sách loại phòng</h5>
+              <div class="d-flex align-items-center flex-wrap justify-content-end">
+                <div class="input-group me-2" style="width: 250px">
+                  <span class="input-group-text"><i class="fas fa-search"></i></span>
+                  <input type="text" class="form-control" placeholder="Tìm kiếm" aria-label="Tìm kiếm loại phòng" />
+                </div>
+                <select class="form-select me-2" style="width: 150px" aria-label="Sắp xếp danh sách">
+                  <option selected>Sắp xếp: Mới nhất</option>
+                  <option value="1">Cũ nhất</option>
+                  <option value="2">Tên A-Z</option>
+                </select>
+                <button
+                  class="btn btn-primary text-nowrap"
+                  data-bs-toggle="modal"
+                  data-bs-target="#addRoomTypeModal"
+                  aria-label="Thêm loại phòng mới"
+                >
+                  <i class="fas fa-plus me-2"></i>Thêm Mới
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div class="apartment-grid">
+              <div class="apartment-card">
+                <img src="../../assets/images/anhphong/12919de7c693ddeefad45c6dd3a4206e.jpg" alt="Apartment 1">
+                <div class="card-content">
+                  <div class="title">Phòng Family Triple</div>
+                  <div class="location">15C Lê Hồng Phong, Phường 4, Thành phố Đà Lạt, Tỉnh Lâm Đồng, Việt Nam</div>
+                </div>
+                <div class="status">
+                  <div class="details"><span>👥</span> 3 <span>👶</span> 1 <span>🛏</span> 2 <span>🕒</span> 0</div>
+                  <span class="indicator red"></span>
+                </div>
+              </div>
+              <div class="apartment-card">
+                <img src="../../assets/images/anhphong/2b44aadc74be501f89caebe3c37b0b82.jpg" alt="Apartment 2">
+                <div class="card-content">
+                  <div class="title">Phòng Family Two Double</div>
+                  <div class="location">15C Lê Hồng Phong, Phường 4, Thành phố Đà Lạt, Tỉnh Lâm Đồng, Việt Nam</div>
+                </div>
+                <div class="status">
+                  <div class="details"><span>👥</span> 2 <span>👶</span> 1 <span>🛏</span> 1 <span>🕒</span> 0</div>
+                  <span class="indicator green"></span>
+                </div>
+              </div>
+              <div class="apartment-card">
+                <img src="../../assets/images/anhphong/5fd07e334fc98f7c85f6017c5a2257bb.jpg" alt="Apartment 3">
+                <div class="card-content">
+                  <div class="title">Phòng Family suite</div>
+                  <div class="location">15C Lê Hồng Phong, Phường 4, Thành phố Đà Lạt, Tỉnh Lâm Đồng, Việt Nam</div>
+                </div>
+                <div class="status">
+                  <div class="details"><span>👥</span> 4 <span>👶</span> 2 <span>🛏</span> 3 <span>🕒</span> 0</div>
+                  <span class="indicator yellow"></span>
+                </div>
+              </div>
+              <div class="apartment-card">
+                <img src="../../assets/images/anhphong/60ad66036b037ba733f60e9bdb36897c.jpg" alt="Apartment 4">
+                <div class="card-content">
+                  <div class="title">Phòng Senior Suite Two Bed Rooms</div>
+                  <div class="location">
+15C Lê Hồng Phong, Phường 4, Thành phố Đà Lạt, Tỉnh Lâm Đồng, Việt Nam</div>
+                </div>
+                <div class="status">
+                  <div class="details"><span>👥</span> 1 <span>👶</span> 0 <span>🛏</span> 1 <span>🕒</span> 0</div>
+                  <span class="indicator green"></span>
+                </div>
+              </div>
+              <div class="apartment-card">
+                <img src="../../assets/images/anhphong/626c3dd3db4684754d8ac433412ab2cf.jpg" alt="Apartment 5">
+                <div class="card-content">
+                  <div class="title">Phòng Deluxe</div>
+                  <div class="location">
+H16 & H17 Nguyễn Thị Nghĩa, Phường 2, Thành phố Đà Lạt, Tỉnh Lâm Đồng, Việt Nam</div>
+                </div>
+                <div class="status">
+                  <div class="details"><span>👥</span> 3 <span>👶</span> 2 <span>🛏</span> 2 <span>🕒</span> 0</div>
+                  <span class="indicator red"></span>
+                </div>
+              </div>
+              <div class="apartment-card">
+                <img src="../../assets/images/anhphong/8649694f7d33062f0de555b816eb8382.jpg" alt="Apartment 6">
+                <div class="card-content">
+                  <div class="title">Phòng Family Triple</div>
+                  <div class="location">H16 & H17 Nguyễn Thị Nghĩa, Phường 2, Thành phố Đà Lạt, Tỉnh Lâm Đồng, Việt Nam</div>
+                </div>
+                <div class="status">
+                  <div class="details"><span>👥</span> 2 <span>👶</span> 1 <span>🛏</span> 1 <span>🕒</span> 0</div>
+                  <span class="indicator green"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer bg-white">
+            <nav aria-label="Page navigation">
+              <ul class="pagination justify-content-end mb-0">
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+                <li class="page-item"><a class="page-link" href="#">40</a></li>
+                <li class="page-item"><a class="page-link" href="#">></a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
