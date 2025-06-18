@@ -3,389 +3,585 @@
   <head>
     <meta charset="UTF-8" />
     <title>Nature Hotel - Tìm kiếm phòng</title>
-    <!-- Bootstrap 5 CDN -->
-
-    <link rel="stylesheet" href="../assets/css/plugins/bootstrap.min.css" />
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
-        background: #fafbfc;
+        background: #ffffff;
       }
-      .room-card {
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-        border-radius: 16px;
-        overflow: hidden;
+      .font-sf {
+        font-family: "SF Pro Display", "Segoe UI", Arial, sans-serif;
       }
-      .room-img {
-        width: 100%;
-        height: 180px;
-        object-fit: cover;
-        border-radius: 16px 16px 0 0;
+      /* Ẩn scroll khi nhỏ */
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
       }
-      .sidebar-cart {
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-      }
-      .star-rating {
-        color: #f6b01e;
-        font-size: 1rem;
-      }
-      .footer {
-        background: #f5f6fa;
-      }
-      .input-search {
-        border-radius: 20px;
-      }
-      .search-icon {
-        position: absolute;
-        right: 14px;
-        top: 10px;
-        color: #999;
-      }
-      .room-card .btn-primary {
-        border-radius: 16px;
-      }
-      .room-card .btn-outline-primary {
-        border-radius: 16px;
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
       }
     </style>
   </head>
-  <body>
-    <!-- Header giả lập -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-3">
-      <div class="container">
-        <a class="navbar-brand fw-bold" href="#"
-          ><img
+  <body class="font-sf">
+    <div
+      class="bg-[#fff] max-w-[1200px] min-h-screen mx-auto rounded-2xl px-0 pt-0 pb-10 relative flex flex-col"
+    >
+      <!-- HEADER -->
+      <header class="flex items-center justify-between mt-5 pb-3 px-9">
+        <div class="flex items-center">
+          <img
             src="../assets/images/logo.png"
-            alt="logo"
-            height="32"
-            class="me-2"
+            alt="Logo"
+            class="h-auto w-28 object-contain mr-2"
           />
-        </a>
-        <ul
-          class="navbar-nav me-auto mb-2 mb-lg-0"
-          style="
-            width: 60%;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            align-items: center;
-            margin: auto;
-            list-style: none;
-          "
-        >
-          <li class="nav-item"><a class="nav-link" href="#">Trang chủ</a></li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Về chúng tôi</a>
-          </li>
-          <li class="nav-item"><a class="nav-link" href="#">Tin tức</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Liên hệ</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Khuyến mãi</a></li>
-        </ul>
-        <div class="d-flex align-items-center">
-          <a href="#"
-            ><img
-              src="https://img.icons8.com/ios-glyphs/30/000000/user--v1.png"
-              height="28"
-          /></a>
         </div>
-      </div>
-    </nav>
-
-    <!-- Main content -->
-    <div class="container mb-5">
-      <div class="row">
-        <!-- Main search and list -->
-        <div class="col-lg-9">
+        <nav class="flex justify-between gap-9" style="width: 60%">
+          <a
+            href="#"
+            class="text-[15px] text-[#222] font-medium hover:underline"
+            >Trang chủ</a
+          >
+          <a
+            href="#"
+            class="text-[15px] text-[#222] font-medium hover:underline"
+            >Về chúng tôi</a
+          >
+          <a
+            href="#"
+            class="text-[15px] text-[#222] font-medium hover:underline"
+            >Tin tức</a
+          >
+          <a
+            href="#"
+            class="text-[15px] text-[#222] font-medium hover:underline"
+            >Liên hệ</a
+          >
+          <a
+            href="#"
+            class="text-[15px] text-[#222] font-medium hover:underline"
+            >Khuyến mãi</a
+          >
+        </nav>
+        <div class="flex items-center gap-3">
+          <div>
+            <svg
+              class="w-7 h-7 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </div>
+          <div>
+            <img src="../assets/images/user.png" class="w-8 h-8" alt="" />
+          </div>
+        </div>
+      </header>
+      <!-- MAIN -->
+      <main class="flex flex-row px-8 pt-1 pb-10 gap-7">
+        <!-- LEFT -->
+        <div class="flex-1 min-w-0">
           <!-- Breadcrumb -->
-          <nav
-            style="--bs-breadcrumb-divider: '>'; font-size: 15px"
-            aria-label="breadcrumb"
-          >
-            <ol class="breadcrumb bg-transparent px-0">
-              <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-              <li class="breadcrumb-item active" aria-current="page">
-                Tìm kiếm
-              </li>
-            </ol>
-          </nav>
-          <!-- Tìm kiếm filter -->
-          <div
-            class="bg-white p-3 rounded-3 mb-3 d-flex flex-wrap align-items-center gap-3 shadow-sm"
-          >
-            <div>
-              <label class="form-label mb-0">Nhận phòng</label>
-              <input
-                type="date"
-                class="form-control"
-                value="2023-12-01"
-                style="min-width: 120px"
-              />
-            </div>
-            <div>
-              <label class="form-label mb-0">Trả phòng</label>
-              <input
-                type="date"
-                class="form-control"
-                value="2023-12-03"
-                style="min-width: 120px"
-              />
-            </div>
-            <div>
-              <label class="form-label mb-0">Người lớn</label>
-              <input
-                type="number"
-                class="form-control"
-                min="1"
-                value="2"
-                style="width: 80px"
-              />
-            </div>
-            <div>
-              <label class="form-label mb-0">Trẻ em</label>
-              <input
-                type="number"
-                class="form-control"
-                min="0"
-                value="1"
-                style="width: 80px"
-              />
-            </div>
-            <div class="flex-grow-1 position-relative">
-              <input
-                type="text"
-                class="form-control input-search"
-                placeholder="Tìm kiếm..."
-                style="padding-right: 34px"
-              />
-              <span class="search-icon"><i class="bi bi-search"></i></span>
-            </div>
-            <div>
-              <button class="btn btn-primary">Tìm kiếm</button>
-            </div>
+          <div class="text-[15px] text-gray-500 pt-2 pb-1 font-semibold">
+            Trang chủ / <span class="font-semibold text-black">Tìm kiếm</span>
           </div>
-          <!-- Danh sách phòng -->
-          <h6 class="mb-3 mt-4 fw-semibold">2 Phòng phù hợp</h6>
-          <!-- Card phòng 1 -->
-          <div class="room-card mb-4 bg-white">
-            <div class="row g-0">
-              <div class="col-md-5">
-                <img
-                  src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
-                  class="room-img"
-                  alt="Luxury room"
+          <!-- INPUTS FILTER BAR -->
+          <div class="flex flex-row gap-2 mt-3 mb-4">
+            <div
+              class="flex items-center bg-white rounded-xl px-3 py-2 w-[185px] relative"
+            >
+              <!-- Nội dung bên trong -->
+              <img src="../assets/images/Calendar.png" class="w-8 h-8" alt="" />
+              <div class="mx-1"></div>
+              <div>
+                <label class="text-xs text-[#333] font-semibold"
+                  >Ngày nhận phòng</label
+                >
+                <input
+                  class="bg-transparent outline-none text-xs font-semibold w-20 text-[#333]"
+                  value="11/11/2025"
+                  type="text"
                 />
               </div>
-              <div class="col-md-7">
-                <div class="card-body p-3 pb-2">
-                  <div
-                    class="d-flex justify-content-between align-items-center"
+              <!-- Border bottom -->
+              <div
+                class="absolute left-0 right-0 w-[95%] bottom-0 h-[1px] bg-black"
+              ></div>
+              <!-- Border right 90% -->
+              <div
+                class="absolute top-1/2 right-0 -translate-y-1/2 h-[80%] w-[1px] bg-gray-200 rounded"
+              ></div>
+            </div>
+
+            <div
+              class="flex items-center bg-white rounded-xl px-3 py-2 w-[185px] relative"
+            >
+              <!-- Nội dung bên trong -->
+              <img src="../assets/images/Calendar.png" class="w-8 h-8" alt="" />
+              <div class="mx-1"></div>
+              <div>
+                <label class="text-xs text-[#333] font-semibold"
+                  >Ngày trả phòng</label
+                >
+                <input
+                  class="bg-transparent outline-none text-xs font-semibold w-20 text-[#333]"
+                  value="12/11/2025"
+                  type="text"
+                />
+              </div>
+              <!-- Border bottom -->
+              <div
+                class="absolute left-0 right-0 w-[95%] bottom-0 h-[1px] bg-black"
+              ></div>
+              <!-- Border right 90% -->
+              <div
+                class="absolute top-1/2 right-0 -translate-y-1/2 h-[80%] w-[1px] bg-gray-200 rounded"
+              ></div>
+            </div>
+
+            <div
+              class="flex items-center bg-white rounded-xl px-3 py-2 w-[185px] relative"
+            >
+              <!-- Nội dung bên trong -->
+              <img src="../assets/images/adults.png" class="w-8 h-8" alt="" />
+              <div class="mx-1"></div>
+              <div>
+                <label class="text-xs text-[#333] font-semibold"
+                  >Người lớn</label
+                >
+                <input
+                  class="bg-transparent outline-none text-xs font-semibold w-20 text-[#333]"
+                  value="2"
+                  type="text"
+                />
+              </div>
+              <!-- Border bottom -->
+              <div
+                class="absolute left-0 right-0 w-[95%] bottom-0 h-[1px] bg-black"
+              ></div>
+              <!-- Border right 90% -->
+              <div
+                class="absolute top-1/2 right-0 -translate-y-1/2 h-[80%] w-[1px] bg-gray-200 rounded"
+              ></div>
+            </div>
+            <div
+              class="flex items-center bg-white rounded-xl px-3 py-2 w-[185px] relative"
+            >
+              <!-- Nội dung bên trong -->
+              <img src="../assets/images/children.png" class="w-8 h-8" alt="" />
+              <div class="mx-1"></div>
+              <div>
+                <label class="text-xs text-[#333] font-semibold">Trẻ em</label>
+                <input
+                  class="bg-transparent outline-none text-xs font-semibold w-20 text-[#333]"
+                  value="1"
+                  type="text"
+                />
+              </div>
+              <!-- Border bottom -->
+              <div
+                class="absolute left-0 right-0 w-[95%] bottom-0 h-[1px] bg-black"
+              ></div>
+              <!-- Border right 90% -->
+              <div
+                class="absolute top-1/2 right-0 -translate-y-1/2 h-[80%] w-[1px] bg-gray-200 rounded"
+              ></div>
+            </div>
+            <div class="flex items-center flex-1">
+              <button
+                class="flex items-center bg-white rounded-xl px-4 py-2 ml-1"
+              >
+                <svg
+                  class="w-6 h-6 text-gray-800"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="M21 21l-4.35-4.35" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <!-- TITLE + SORT -->
+          <div class="flex flex-row items-center justify-between mb-3 mt-2">
+            <div class="text-[18px] font-semibold text-[#232323]">
+              2 Phòng phù hợp
+            </div>
+          </div>
+          <div class="relative inline-block text-left">
+            <!-- Nút mở dropdown -->
+            <button
+              type="button"
+              class="flex items-center gap-1 px-3 py-1 rounded-lg bg-[#F6F6F6] text-[#474747] font-medium border border-gray-200 text-[15px] shadow-sm focus:outline-none"
+              id="sortDropdownBtn"
+              onclick="document.getElementById('sortDropdownMenu').classList.toggle('hidden')"
+            >
+              <svg
+                width="17"
+                height="17"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                class="inline-block align-middle"
+                viewBox="0 0 24 24"
+              >
+                <path d="M10 6h10M6 12h14M8 18h12"></path>
+              </svg>
+              Sắp xếp
+              <svg
+                class="ml-1 w-4 h-4 text-gray-500"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <!-- Dropdown menu -->
+            <div
+              id="sortDropdownMenu"
+              class="hidden absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-lg shadow-lg z-10"
+            >
+              <button
+                class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+              >
+                Mặc định
+              </button>
+              <button
+                class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+              >
+                Giá tăng dần
+              </button>
+              <button
+                class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+              >
+                Giá giảm dần
+              </button>
+              <button
+                class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+              >
+                Đánh giá cao nhất
+              </button>
+            </div>
+          </div>
+
+          <!-- CARD PHÒNG 1 -->
+          <div
+            class="rounded-xl mt-4 bg-white shadow-sm mb-6 border border-gray-100 overflow-hidden"
+          >
+            <img
+              src="../assets/images/twin.jpg"
+              alt="Luxury room"
+              class="w-full h-[300px] object-cover"
+            />
+            <div class="p-4 flex gap-5" style="position: relative">
+              <!-- BÊN TRÁI: Thông tin -->
+              <div class="flex-1">
+                <div class="font-semibold text-[#232323] text-[15px]">
+                  Phòng luxury có tầm nhìn thành phố
+                </div>
+                <div class="mt-1 text-[13px]">
+                  <span class="font-bold text-[#232323]">Giá: </span>
+                  <span class="font-bold text-[#111]">2.000.000đ / Đêm</span>
+                </div>
+                <div class="mt-1 text-[13px] text-[#565656]">
+                  <span class="font-semibold">Loại phòng:</span> Phòng đôi
+                </div>
+                <div class="mt-1 text-[13px] text-[#A6A6A6]">
+                  Diện tích: 25 m<sup>2</sup>, 1 giường đôi lớn, view thành
+                  phố<br />
+                  Tiện nghi: Wifi miễn phí, điều hòa, tivi, phòng tắm riêng
+                </div>
+                <div class="flex gap-5 mt-3 text-[#7e7e7e] text-base">
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="../assets/images/bed.png"
+                      class="w-5 h-5"
+                      alt=""
+                    />
+                    <span class="text-xs text-[#232323]">2</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="../assets/images/bath.png"
+                      class="w-5 h-5"
+                      alt=""
+                    />
+                    <span class="text-xs text-[#232323]">2</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="../assets/images/car.png"
+                      class="w-5 h-5"
+                      alt=""
+                    />
+                    <span class="text-xs text-[#232323]">2</span>
+                  </div>
+                </div>
+              </div>
+              <!-- BÊN PHẢI: Đánh giá & 2 nút cuối card -->
+              <div
+                class="flex flex-col justify-between h-full min-w-[300px] h-full"
+              >
+                <!-- Đánh giá ở trên -->
+                <div
+                  class="text-[13px] font-medium text-[#333] mb-2 mt-1 text-right"
+                >
+                  Đánh giá:
+                  <span class="text-[#F6B01E] text-base ml-1">★★★★★</span>
+                </div>
+                <!-- 2 nút sát đáy -->
+                <div
+                  class="flex flex-row gap-2 mt-auto"
+                  style="
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    width: 300px;
+                  "
+                >
+                  <button
+                    class="w-full px-5 py-2 rounded-lg bg-[#F6F6F6] hover:bg-gray-200 text-[#232323] text-[14px] font-medium border border-gray-200"
                   >
-                    <h6 class="card-title mb-1">Luxury room with city view</h6>
-                    <div class="star-rating">
-                      <span>Đánh giá:</span>
-                      <span> ★★★★★ </span>
-                    </div>
-                  </div>
-                  <div class="mb-1">
-                    <span class="fw-bold text-danger"
-                      >Giá: 2.000.000đ /đêm</span
-                    >
-                  </div>
-                  <div class="mb-2 small">
-                    Loại phòng: Phòng đôi <br />
-                    (2 giường đơn, view thành phố, bồn tắm, bàn làm việc)
-                  </div>
-                  <div class="mb-2 d-flex gap-3 small text-muted">
-                    <span
-                      ><img
-                        src="https://img.icons8.com/ios-filled/16/999999/user.png"
-                      />
-                      2</span
-                    >
-                    <span
-                      ><img
-                        src="https://img.icons8.com/ios-filled/16/999999/baby.png"
-                      />
-                      2</span
-                    >
-                    <span
-                      ><img
-                        src="https://img.icons8.com/ios-glyphs/16/999999/bed.png"
-                      />
-                      2</span
-                    >
-                  </div>
-                  <div class="d-flex gap-2">
-                    <a href="#" class="btn btn-outline-primary btn-sm"
-                      >Xem chi tiết</a
-                    >
-                    <a href="#" class="btn btn-primary btn-sm">Đặt phòng</a>
-                  </div>
+                    Xem chi tiết
+                  </button>
+                  <button
+                    class="w-full px-5 py-2 rounded-lg bg-[#2196F3] hover:bg-[#1769aa] text-white text-[14px] font-semibold shadow"
+                  >
+                    Đặt phòng
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-          <!-- Card phòng 2 -->
-          <div class="room-card mb-4 bg-white">
-            <div class="row g-0">
-              <div class="col-md-5">
-                <img
-                  src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=800&q=80"
-                  class="room-img"
-                  alt="Luxury room"
-                />
+          <!-- CARD PHÒNG 2 -->
+          <div
+            class="rounded-xl mt-4 bg-white shadow-sm mb-6 border border-gray-100 overflow-hidden"
+          >
+            <img
+              src="../assets/images/delux.jpg"
+              alt="Luxury room"
+              class="w-full h-[300px] object-cover"
+            />
+            <div class="p-4 flex gap-5" style="position: relative">
+              <!-- BÊN TRÁI: Thông tin -->
+              <div class="flex-1">
+                <div class="font-semibold text-[#232323] text-[15px]">
+                  Phòng delux có tầm nhìn biển
+                </div>
+                <div class="mt-1 text-[13px]">
+                  <span class="font-bold text-[#232323]">Giá: </span>
+                  <span class="font-bold text-[#111]">2.000.000đ / Đêm</span>
+                </div>
+                <div class="mt-1 text-[13px] text-[#565656]">
+                  <span class="font-semibold">Loại phòng:</span> Phòng đôi
+                </div>
+                <div class="mt-1 text-[13px] text-[#A6A6A6]">
+                  Diện tích: 25 m<sup>2</sup>, 1 giường đôi lớn, view thành
+                  phố<br />
+                  Tiện nghi: Wifi miễn phí, điều hòa, tivi, phòng tắm riêng
+                </div>
+                <div class="flex gap-5 mt-3 text-[#7e7e7e] text-base">
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="../assets/images/bed.png"
+                      class="w-5 h-5"
+                      alt=""
+                    />
+                    <span class="text-xs text-[#232323]">2</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="../assets/images/bath.png"
+                      class="w-5 h-5"
+                      alt=""
+                    />
+                    <span class="text-xs text-[#232323]">2</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <img
+                      src="../assets/images/car.png"
+                      class="w-5 h-5"
+                      alt=""
+                    />
+                    <span class="text-xs text-[#232323]">2</span>
+                  </div>
+                </div>
               </div>
-              <div class="col-md-7">
-                <div class="card-body p-3 pb-2">
-                  <div
-                    class="d-flex justify-content-between align-items-center"
+              <!-- BÊN PHẢI: Đánh giá & 2 nút cuối card -->
+              <div
+                class="flex flex-col justify-between h-full min-w-[300px] h-full"
+              >
+                <!-- Đánh giá ở trên -->
+                <div
+                  class="text-[13px] font-medium text-[#333] mb-2 mt-1 text-right"
+                >
+                  Đánh giá:
+                  <span class="text-[#F6B01E] text-base ml-1">★★★★★</span>
+                </div>
+                <!-- 2 nút sát đáy -->
+                <div
+                  class="flex flex-row gap-2 mt-auto"
+                  style="
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    width: 300px;
+                  "
+                >
+                  <button
+                    class="w-full px-5 py-2 rounded-lg bg-[#F6F6F6] hover:bg-gray-200 text-[#232323] text-[14px] font-medium border border-gray-200"
                   >
-                    <h6 class="card-title mb-1">Luxury room with city view</h6>
-                    <div class="star-rating">
-                      <span>Đánh giá:</span>
-                      <span> ★★★★★ </span>
-                    </div>
-                  </div>
-                  <div class="mb-1">
-                    <span class="fw-bold text-danger"
-                      >Giá: 2.000.000đ /đêm</span
-                    >
-                  </div>
-                  <div class="mb-2 small">
-                    Loại phòng: Phòng đôi <br />
-                    (2 giường đơn, view thành phố, sofa, bàn tiếp khách)
-                  </div>
-                  <div class="mb-2 d-flex gap-3 small text-muted">
-                    <span
-                      ><img
-                        src="https://img.icons8.com/ios-filled/16/999999/user.png"
-                      />
-                      2</span
-                    >
-                    <span
-                      ><img
-                        src="https://img.icons8.com/ios-filled/16/999999/baby.png"
-                      />
-                      2</span
-                    >
-                    <span
-                      ><img
-                        src="https://img.icons8.com/ios-glyphs/16/999999/bed.png"
-                      />
-                      2</span
-                    >
-                  </div>
-                  <div class="d-flex gap-2">
-                    <a href="#" class="btn btn-outline-primary btn-sm"
-                      >Xem chi tiết</a
-                    >
-                    <a href="#" class="btn btn-primary btn-sm">Đặt phòng</a>
-                  </div>
+                    Xem chi tiết
+                  </button>
+                  <button
+                    class="w-full px-5 py-2 rounded-lg bg-[#2196F3] hover:bg-[#1769aa] text-white text-[14px] font-semibold shadow"
+                  >
+                    Đặt phòng
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <!-- Sidebar giỏ phòng -->
-        <div class="col-lg-3">
-          <ol class="breadcrumb bg-transparent px-0"></ol>
-          <div class="sidebar-cart p-3 mb-4" style="margin-top: 38px">
-            <h6 class="fw-semibold">Phiếu đặt phòng của bạn</h6>
-            <div class="text-muted small mb-2">Bạn chưa đặt phòng nào</div>
-            <button class="btn btn-light btn-sm w-100" disabled>
-              Trang thái: Đơn rỗng
-            </button>
+        <!-- SIDEBAR ĐƠN PHÒNG -->
+        <div class="w-[325px] flex-shrink-0 pt-10">
+          <div class="bg-white rounded-xl shadow-md border border-gray-100 p-5">
+            <div class="font-medium text-[#232323] mb-3">
+              Phiếu đặt phòng của bạn
+            </div>
+            <div
+              class="border rounded-md px-3 py-2 text-sm text-[#929292] mb-2"
+            >
+              Bạn chưa đặt phòng nào
+            </div>
+            <div class="text-right text-[15px] text-[#888]">
+              Tổng tiền: <span class="font-bold text-[#232323]">0đ</span>
+            </div>
           </div>
+        </div>
+      </main>
+    </div>
+    <footer class="bg-[#e9eaeb] text-[#222] font-[Montserrat,sans-serif]">
+      <!-- Đăng ký nhận thông tin -->
+      <div
+        class="max-w-[1200px] mx-auto flex justify-between items-center py-6 px-6 border-b border-[#e3e3e3]"
+      >
+        <div class="font-bold text-[19px]">Đăng kí nhận thông tin</div>
+        <form class="flex flex-1 ml-7 max-w-[860px]">
+          <input
+            type="email"
+            class="flex-1 rounded-full px-6 py-2 outline-none bg-[#f6f6f6] text-[#888] placeholder:text-[#888] text-base"
+            placeholder="Email của bạn ..."
+          />
+          <button
+            type="submit"
+            class="ml-[-45px] flex items-center justify-center w-[45px] h-[45px] rounded-full bg-[#bfc0c1] hover:bg-[#a6a7a8]"
+          >
+            <svg
+              class="w-6 h-6 text-white"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                transform="rotate(-90 10 10)"
+                d="M2.293 10.293a1 1 0 011.414 0l4.293 4.293V3a1 1 0 112 0v11.586l4.293-4.293a1 1 0 111.414 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414z"
+              />
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Nội dung chính của footer -->
+      <div
+        class="max-w-[1200px] mx-auto py-10 px-6 grid grid-cols-1 md:grid-cols-4 gap-10"
+      >
+        <!-- Cột 1: Logo & info -->
+        <div>
+          <div class="font-bold text-4xl mb-2 tracking-wide">
+            <img
+              src="../assets/images/logo.png"
+              alt="Logo"
+              class="h-auto w-28 object-contain mr-2"
+            />
+          </div>
+          <div class="leading-snug mb-5">
+            Khách sạn Naturel Hà Nội <br />
+
+            Địa chỉ: 62 Khúc Thừa Dụ, Cầu Giấy, Hà Nội<br />
+            Số điện thoại: 1234567890<br />
+            Email: company@gmail.com
+          </div>
+          <div class="flex gap-5 mt-2 text-2xl">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <!-- Cột 2 -->
+        <div>
+          <div class="font-bold text-[17px] mb-3">Về chúng tôi</div>
+          <ul class="space-y-1">
+            <li><a href="#" class="hover:underline">Giới thiệu</a></li>
+            <li><a href="#" class="hover:underline">Thông tin pháp lý</a></li>
+            <li><a href="#" class="hover:underline">Liên hệ</a></li>
+            <li><a href="#" class="hover:underline">Tin tức</a></li>
+          </ul>
+        </div>
+        <!-- Cột 3 -->
+        <div>
+          <div class="font-bold text-[17px] mb-3">
+            Chính sách &amp; Điều khoản
+          </div>
+          <ul class="space-y-1">
+            <li>
+              <a href="#" class="hover:underline">Chính sách thanh toán</a>
+            </li>
+            <li>
+              <a href="#" class="hover:underline">Chính sách đổi - trả phòng</a>
+            </li>
+            <li><a href="#" class="hover:underline">Quy định bãi đỗ</a></li>
+            <li><a href="#" class="hover:underline">Điều khoản sử dụng</a></li>
+          </ul>
+        </div>
+        <!-- Cột 4 -->
+        <div>
+          <div class="font-bold text-[17px] mb-3">Chương trình khuyến mãi</div>
+          <ul class="space-y-1">
+            <li><a href="#" class="hover:underline">Khuyến mãi hôm nay</a></li>
+            <li>
+              <a href="#" class="hover:underline">Ưu đãi cho khách hàng mới</a>
+            </li>
+          </ul>
         </div>
       </div>
-    </div>
 
-    <!-- Footer -->
-    <footer class="footer mt-5 pt-4 pb-2">
-      <div class="container">
-        <div class="row mb-3">
-          <div class="col-lg-4">
-            <div class="fw-bold mb-2">LOGO</div>
-            <div>Địa chỉ: 34 Nguyễn Văn Huyên, Cầu Giấy, Hà Nội</div>
-            <div>Email: contact@naturehotel.vn</div>
-            <div>Số điện thoại: 1900 888 888</div>
-            <div class="mt-2">
-              <a href="#"
-                ><img
-                  src="https://img.icons8.com/ios-glyphs/20/000000/facebook-new.png"
-              /></a>
-              <a href="#"
-                ><img
-                  src="https://img.icons8.com/ios-glyphs/20/000000/instagram-new.png"
-              /></a>
-              <a href="#"
-                ><img
-                  src="https://img.icons8.com/ios-glyphs/20/000000/youtube-play.png"
-              /></a>
-            </div>
-          </div>
-          <div class="col-lg-2">
-            <div class="fw-semibold mb-2">Về chúng tôi</div>
-            <ul class="list-unstyled">
-              <li>
-                <a href="#" class="text-decoration-none text-dark"
-                  >Giới thiệu</a
-                >
-              </li>
-              <li>
-                <a href="#" class="text-decoration-none text-dark"
-                  >Tuyển dụng</a
-                >
-              </li>
-              <li>
-                <a href="#" class="text-decoration-none text-dark">Tin tức</a>
-              </li>
-            </ul>
-          </div>
-          <div class="col-lg-3">
-            <div class="fw-semibold mb-2">Chính sách & Điều khoản</div>
-            <ul class="list-unstyled">
-              <li>
-                <a href="#" class="text-decoration-none text-dark"
-                  >Chính sách hoàn tiền</a
-                >
-              </li>
-              <li>
-                <a href="#" class="text-decoration-none text-dark"
-                  >Chính sách bảo mật</a
-                >
-              </li>
-              <li>
-                <a href="#" class="text-decoration-none text-dark"
-                  >Điều khoản sử dụng</a
-                >
-              </li>
-            </ul>
-          </div>
-          <div class="col-lg-3">
-            <div class="fw-semibold mb-2">Chương trình khuyến mãi</div>
-            <ul class="list-unstyled">
-              <li>
-                <a href="#" class="text-decoration-none text-dark"
-                  >Khuyến mãi hot</a
-                >
-              </li>
-              <li>
-                <a href="#" class="text-decoration-none text-dark"
-                  >Ưu đãi cho hội viên</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-        <hr />
-        <div class="text-center small text-muted">
-          &copy; 2025 GKTEAM | Được thiết kế bởi GKTEAM/Nhóm 10
-        </div>
+      <!-- Line cuối footer -->
+      <div
+        class="border-t border-[#dedede] py-4 mt-3 px-6 text-sm text-[#444] flex items-center justify-between max-w-[1200px] mx-auto"
+      >
+        <div class="font-semibold">&copy; 2025 64KTPM1</div>
+        <div class="font-semibold">Được thiết kế bởi 64KTPM1/Nhóm 10</div>
       </div>
     </footer>
-    <script src="../assets/js/plugins/bootstrap.min.js"></script>
-    <!-- Bootstrap JS (tùy chọn) -->
+
+    <!-- FontAwesome 6 CDN cho icon -->
   </body>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
 </html>
